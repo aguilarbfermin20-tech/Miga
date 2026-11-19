@@ -1,0 +1,8 @@
+[
+  {"id":"hogaza","nombre":"Hogaza de campo","precio":6800,"descripcion":"1 kg, 78 % de hidratación. Corteza crocante y miga abierta.","horario":"7:00","etiqueta":"Recién salida · 7:00","recienSalido":true,"agotado":false,"foto":"hogaza.jpg","alt":"Hogaza de campo con corteza dorada y cortes"},
+  {"id":"medialunas","nombre":"Medialunas","precio":950,"descripcion":"Laminadas a mano con manteca. La docena sale $ 10.500.","horario":"7:40","etiqueta":"Recién salidas · 7:40","recienSalido":true,"agotado":false,"foto":"medialunas.jpg","alt":"Medialunas de manteca sobre fondo oscuro"},
+  {"id":"centeno","nombre":"Centeno y semillas","precio":7400,"descripcion":"50 % centeno, lino, girasol y sésamo. Dura una semana.","horario":"9:30","etiqueta":"Sale a las 9:30","recienSalido":false,"agotado":false,"foto":"centeno.jpg","alt":"Pan de centeno cortado en rodajas"},
+  {"id":"integral","nombre":"Hogaza integral","precio":7100,"descripcion":"70 % harina integral, miga húmeda y corteza fina. 900 g.","horario":"11:00","etiqueta":"Sale a las 11:00","recienSalido":false,"agotado":false,"foto":"hogaza-integral.jpg","alt":"Hogaza integral cortada sobre una tabla"},
+  {"id":"rolls","nombre":"Rolls de canela","precio":2300,"descripcion":"Masa brioche y glaseado de queso crema.","horario":"16:00","etiqueta":"Sale a las 16:00","recienSalido":false,"agotado":false,"foto":"rolls.jpg","alt":"Rolls de canela espolvoreados con azúcar"},
+  {"id":"baguette","nombre":"Baguette","precio":2900,"descripcion":"Agotada por hoy. Sumala y te la guardamos para mañana.","horario":"8:00","etiqueta":"Vuelve mañana 8:00","recienSalido":false,"agotado":true,"foto":"baguette.jpg","alt":"Baguettes doradas sobre la mesada"}
+]

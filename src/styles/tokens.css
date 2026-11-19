@@ -1,0 +1,54 @@
+/* Tokens de diseño · docs/02-diseno.md */
+:root {
+  /* Color */
+  --paper: #F3EFE7;  /* fondo general (harina) */
+  --ink: #1A1512;    /* texto, bandas oscuras, botón secundario */
+  --yolk: #F2B31B;   /* acento principal: botón, cinta, reloj, contador */
+  --olive: #4A5A26;  /* acento secundario: itálica, producto agregado */
+  --crumb: #E6DDCC;  /* superficies y separadores */
+  --muted: #6D6257;  /* texto secundario */
+  --wa: #1F8A4C;     /* solo botón flotante de WhatsApp y estado "Abierto" */
+  --hot: #E0702B;    /* punto "recién salido" */
+
+  /* Derivados para texto sobre --ink (contraste ≥ 4.5:1) */
+  --on-ink: #EADFCF;
+  --on-ink-soft: #CFC4B5;
+  --on-ink-dim: #8F857A;
+  --closed: #B42318;
+
+  /* Tipografía */
+  --serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --fvs: "SOFT" 100, "WONK" 1;
+
+  --fs-body: 17px;
+  --fs-h1: clamp(60px, 10.5vw, 168px);
+  --fs-h2: clamp(56px, 8vw, 128px);
+  --fs-h3: 32px;
+
+  /* Espaciado y forma */
+  --container: 1280px;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --section-pad: 80px;
+  --nav-h: 72px;
+  --r-card: 18px;
+  --r-photo: 20px;
+  --r-pill: 999px;
+  --shadow-card: 0 26px 50px rgba(26, 21, 18, .22);
+  --shadow-drawer: -20px 0 60px rgba(0, 0, 0, .25);
+  --shadow-fab: 0 14px 30px rgba(0, 0, 0, .25);
+
+  /* Movimiento */
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --t-micro: 250ms;
+  --t-enter: 800ms;
+  --t-drawer: 450ms;
+
+  color-scheme: light;
+}
+
+@media (min-width: 861px) {
+  :root { --section-pad: 112px; }
+}

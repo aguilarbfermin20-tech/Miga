@@ -1,0 +1,123 @@
+---
+---
+
+<div class="progress" data-progress aria-hidden="true"></div>
+
+<nav class="nav" data-nav aria-label="Principal">
+  <div class="wrap nav-row">
+    <a class="logo" href="#" aria-label="Miga, volver al inicio">miga<span>.</span></a>
+    <ul class="links" role="list">
+      <li><a href="#hoy">Hoy en el horno</a></li>
+      <li><a href="#proceso">Cómo lo hacemos</a></li>
+      <li><a href="#local">Horarios</a></li>
+    </ul>
+    <button class="bag-btn" type="button" data-open-order aria-haspopup="dialog" aria-controls="pedido">
+      Tu pedido
+      <span class="count" data-count aria-hidden="true">0</span>
+      <span class="visually-hidden" data-count-sr>(vacío)</span>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 40;
+    height: 4px;
+    background: linear-gradient(90deg, var(--yolk), var(--hot));
+    transform-origin: 0 50%;
+    transform: scaleX(var(--p, 0));
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 30;
+    padding-top: env(safe-area-inset-top, 0px);
+    color: var(--paper);
+    transition: background-color .3s, color .3s, box-shadow .3s;
+  }
+  .nav.is-solid {
+    background: rgba(243, 239, 231, .86);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--ink);
+    box-shadow: 0 1px 0 rgba(26, 21, 18, .08);
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: var(--nav-h);
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 34px;
+    font-weight: 500;
+    font-variation-settings: var(--fvs);
+    line-height: 1;
+    text-decoration: none;
+  }
+  .logo span { color: var(--yolk); }
+
+  .links {
+    display: flex;
+    gap: 28px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .links a {
+    position: relative;
+    display: inline-block;
+    padding-block: 10px;
+    text-decoration: none;
+  }
+  .links a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 4px;
+    height: 2px;
+    background: var(--yolk);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s var(--ease);
+  }
+  .links a:hover::after,
+  .links a:focus-visible::after { transform: scaleX(1); }
+
+  .bag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 8px 0 16px;
+    border: 1.5px solid currentColor;
+    border-radius: var(--r-pill);
+    background: transparent;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .count {
+    display: grid;
+    place-items: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 7px;
+    border-radius: var(--r-pill);
+    background: var(--yolk);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    transition: transform .3s var(--ease);
+  }
+  .count.is-bump { transform: scale(1.4); }
+
+  @media (max-width: 760px) {
+    .links { display: none; }
+  }
+</style>

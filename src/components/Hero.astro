@@ -1,0 +1,215 @@
+---
+import { Picture } from 'astro:assets';
+import heroImg from '../assets/img/hero.jpg';
+
+// Titular dividido en letras en el servidor: sin parpadeo ni salto de layout.
+// Las palabras van en un .w sin cortes para que el texto siga partiendo
+// entre palabras en pantallas chicas.
+const lines = [
+  { text: 'Pan de verdad,', gold: false },
+  { text: 'a las 7.', gold: true },
+];
+const label = lines.map((l) => l.text).join(' ');
+---
+
+<header class="hero grain" id="hero" data-hero>
+  <div class="layer l-photo" data-depth="18" data-scroll-speed=".25" aria-hidden="true">
+    <Picture
+      src={heroImg}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1280, 1800]}
+      sizes="112vw"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+  <div class="layer l-word" data-depth="-28" data-scroll-speed="-.12" aria-hidden="true">
+    <span>miga</span>
+  </div>
+  <div class="layer l-shade" aria-hidden="true"></div>
+  <div class="seal" data-depth="40" aria-hidden="true">
+    <svg viewBox="0 0 200 200" focusable="false">
+      <defs>
+        <path id="seal-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"></path>
+      </defs>
+      <text><textPath href="#seal-circle" textLength="488" lengthAdjust="spacing">MASA MADRE · 36 HORAS · HORNO DE PISO · </textPath></text>
+    </svg>
+    <b>36h</b>
+  </div>
+
+  <div class="wrap content">
+    <h1 class="headline" aria-label={label} data-headline>
+      {
+        lines.map((line) => (
+          <span class:list={['line', { gold: line.gold }]} aria-hidden="true">
+            {line.text.split(' ').map((word, i, words) => (
+              <>
+                <span class="w">
+                  {[...word].map((c) => (
+                    <span class="ch">{c}</span>
+                  ))}
+                </span>
+                {i < words.length - 1 && ' '}
+              </>
+            ))}
+          </span>
+        ))
+      }
+    </h1>
+    <div class="side">
+      <p>Masa madre, harina de molino chico, agua, sal y tiempo. Horneamos todos los días en Villa Crespo.</p>
+      <div class="ctas">
+        <a class="btn btn-yolk" href="#hoy">Armar mi pedido</a>
+        <a class="btn btn-line" href="#proceso">Cómo lo hacemos</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint mono" aria-hidden="true">Bajá<i></i></div>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 680px;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .layer { position: absolute; inset: 0; }
+  .l-photo { inset: -6%; }
+  .l-photo :global(picture) { display: block; width: 100%; height: 100%; }
+  .l-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  .l-word {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .l-word span {
+    font-family: var(--serif);
+    font-size: min(38vw, 560px);
+    font-weight: 800;
+    font-variation-settings: var(--fvs);
+    line-height: .8;
+    letter-spacing: -.04em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(242, 179, 27, .45);
+    user-select: none;
+  }
+
+  .l-shade {
+    background:
+      linear-gradient(180deg, rgba(26, 21, 18, .65), rgba(26, 21, 18, .25) 40%, rgba(26, 21, 18, .92)),
+      linear-gradient(90deg, rgba(26, 21, 18, .5), transparent 60%);
+  }
+
+  /* Las capas que se mueven con puntero/scroll solo reservan GPU cuando hay efecto */
+  :global(.has-parallax) .l-photo,
+  :global(.has-parallax) .l-word,
+  :global(.has-parallax) .seal { will-change: transform, translate; }
+
+  .seal {
+    position: absolute;
+    z-index: 4;
+    top: 120px;
+    right: max(24px, env(safe-area-inset-right, 0px));
+    width: 140px;
+    height: 140px;
+  }
+  .seal svg {
+    width: 100%;
+    height: 100%;
+    animation: turn 22s linear infinite;
+  }
+  .seal text {
+    fill: var(--paper);
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 5px;
+  }
+  .seal b {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 600;
+    font-variation-settings: "SOFT" 100;
+    color: var(--yolk);
+  }
+  @keyframes turn { to { transform: rotate(360deg); } }
+
+  .content {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+    min-height: 680px;
+    padding-block: 160px 64px;
+  }
+
+  .headline {
+    font-size: var(--fs-h1);
+    cursor: default;
+  }
+  .headline .line { display: block; }
+  .headline .w { display: inline-block; white-space: nowrap; }
+  .headline .ch {
+    display: inline-block;
+    font-weight: 300;
+    transition: font-weight .25s ease-out;
+  }
+  .headline .gold { color: var(--yolk); font-style: italic; }
+
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 340px;
+  }
+  .side p { font-size: 18px; color: var(--on-ink); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .scroll-hint {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--on-ink-soft);
+    transform: translateX(-50%);
+  }
+  .scroll-hint i {
+    width: 1.5px;
+    height: 34px;
+    background: linear-gradient(var(--yolk), transparent);
+    animation: drip 1.8s ease-in-out infinite;
+  }
+  @keyframes drip {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @media (max-width: 860px) {
+    .hero, .content { min-height: 620px; }
+    .content { grid-template-columns: 1fr; gap: 28px; padding-block: 150px 72px; }
+    .scroll-hint { display: none; }
+    .seal { top: 92px; width: 104px; height: 104px; }
+    .seal b { font-size: 30px; }
+  }
+</style>

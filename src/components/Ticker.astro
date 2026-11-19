@@ -1,0 +1,74 @@
+---
+import productos from '../data/productos.json';
+import horarios from '../data/horarios.json';
+import type { Producto } from '../lib/types';
+
+const minutos = (h: string) => {
+  const [hh, mm] = h.split(':').map(Number);
+  return hh * 60 + mm;
+};
+
+const items = (productos as Producto[])
+  .filter((p) => !p.agotado)
+  .sort((a, b) => minutos(a.horario) - minutos(b.horario))
+  .map((p) => `${p.horario} ${p.nombre.toLowerCase()}`);
+
+items.push(`Encargos hasta las ${Number(horarios.encargosHasta.split(':')[0])} h`);
+---
+
+<div class="ticker">
+  <div class="track">
+    <ul role="list" aria-label="Horarios de horneado de hoy">
+      {items.map((t) => <li>{t}</li>)}
+    </ul>
+    <ul role="list" aria-hidden="true">
+      {items.map((t) => <li>{t}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    border-block: 1.5px solid var(--ink);
+    background: var(--yolk);
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .ticker:hover .track { animation-play-state: paused; }
+
+  ul {
+    display: flex;
+    flex: none;
+    gap: 48px;
+    padding: 14px 48px 14px 0;
+  }
+  li {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  li::before { content: "✶"; margin-right: 14px; }
+
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* Sin animación, la cinta queda quieta y muestra todo en varias líneas */
+  @media (prefers-reduced-motion: reduce) {
+    .ticker { white-space: normal; }
+    .track { width: auto; }
+    ul[aria-hidden="true"] { display: none; }
+    ul {
+      flex: 1;
+      flex-wrap: wrap;
+      gap: 6px 32px;
+      padding-inline: var(--gutter-l) var(--gutter-r);
+    }
+  }
+</style>

@@ -140,3 +140,5 @@ button { cursor: pointer; }
     transition: none !important;
   }
 }
+
+main:focus { outline: none; }

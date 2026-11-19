@@ -12,6 +12,11 @@ const lines = [
 const label = lines.map((l) => l.text).join(' ');
 ---
 
+<script is:inline>
+  // Oculta las letras antes del primer pintado solo si va a haber entrada animada
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+    document.documentElement.classList.add('hero-intro');
+</script>
 <header class="hero grain" id="hero" data-hero>
   <div class="layer l-photo" data-depth="18" data-scroll-speed=".25" aria-hidden="true">
     <Picture
@@ -132,7 +137,6 @@ const label = lines.map((l) => l.text).join(' ');
     font-family: var(--mono);
     font-size: 14px;
     font-weight: 500;
-    letter-spacing: 5px;
   }
   .seal b {
     position: absolute;
@@ -170,6 +174,7 @@ const label = lines.map((l) => l.text).join(' ');
     transition: font-weight .25s ease-out;
   }
   .headline .gold { color: var(--yolk); font-style: italic; }
+  :global(.hero-intro) .headline .ch { opacity: 0; }
 
   .side {
     display: flex;
@@ -213,3 +218,114 @@ const label = lines.map((l) => l.text).join(' ');
     .seal b { font-size: 30px; }
   }
 </style>
+
+<script>
+  import { allowsFancyMotion, onResize, onScroll } from '../lib/motion';
+
+  const hero = document.querySelector<HTMLElement>('[data-hero]')!;
+  const chars = [...hero.querySelectorAll<HTMLElement>('.headline .ch')];
+  const depthLayers = [...hero.querySelectorAll<HTMLElement>('[data-depth]')].map((el) => ({
+    el,
+    depth: Number(el.dataset.depth),
+  }));
+  const scrollLayers = [...hero.querySelectorAll<HTMLElement>('[data-scroll-speed]')].map((el) => ({
+    el,
+    speed: Number(el.dataset.scrollSpeed),
+  }));
+
+  const RADIUS = 260;
+  const REST = 300;
+  const MAX = 900;
+
+  /* ---------- Entrada escalonada del titular ---------- */
+  const root = document.documentElement;
+  if (root.classList.contains('hero-intro')) {
+    chars.forEach((ch, i) => {
+      ch.animate(
+        [
+          { transform: 'translateY(60%)', opacity: 0 },
+          { transform: 'none', opacity: 1 },
+        ],
+        { duration: 700, delay: 200 + i * 28, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' },
+      );
+    });
+    // fill: backwards mantiene el estado inicial durante el retraso, así que ya podemos soltar la clase
+    root.classList.remove('hero-intro');
+  }
+
+  /* ---------- Posiciones cacheadas de las letras (coordenadas de página) ---------- */
+  let centers: { x: number; y: number }[] = [];
+  function measure() {
+    const sx = window.scrollX;
+    const sy = window.scrollY;
+    centers = chars.map((ch) => {
+      const r = ch.getBoundingClientRect();
+      return { x: r.left + r.width / 2 + sx, y: r.top + r.height / 2 + sy };
+    });
+  }
+  measure();
+  onResize(measure);
+  document.fonts?.ready.then(measure);
+
+  /* ---------- Puntero: peso variable + capas ---------- */
+  let px = 0;
+  let py = 0;
+  let pending = false;
+  let active = false;
+
+  function applyPointer() {
+    pending = false;
+    if (!active) return;
+    const sx = window.scrollX;
+    const sy = window.scrollY;
+    for (let i = 0; i < chars.length; i++) {
+      const c = centers[i];
+      const d = Math.hypot(px + sx - c.x, py + sy - c.y);
+      const w = Math.round(REST + (MAX - REST) * Math.max(0, 1 - d / RADIUS));
+      chars[i].style.fontWeight = String(w);
+    }
+    const nx = px / window.innerWidth - 0.5;
+    const ny = py / window.innerHeight - 0.5;
+    for (const { el, depth } of depthLayers) el.style.translate = `${nx * depth}px ${ny * depth}px`;
+  }
+
+  hero.addEventListener(
+    'pointermove',
+    (e) => {
+      if (e.pointerType !== 'mouse' || !allowsFancyMotion()) return;
+      active = true;
+      px = e.clientX;
+      py = e.clientY;
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(applyPointer);
+      }
+    },
+    { passive: true },
+  );
+
+  hero.addEventListener('pointerleave', () => {
+    active = false;
+    chars.forEach((ch) => (ch.style.fontWeight = ''));
+  });
+
+  /* ---------- Scroll: parallax de foto y palabra ---------- */
+  let parallaxOn = false;
+  onScroll((y) => {
+    if (!allowsFancyMotion()) {
+      if (parallaxOn) {
+        scrollLayers.forEach(({ el }) => (el.style.transform = ''));
+        depthLayers.forEach(({ el }) => (el.style.translate = ''));
+        root.classList.remove('has-parallax');
+        parallaxOn = false;
+      }
+      return;
+    }
+    if (!parallaxOn) {
+      root.classList.add('has-parallax');
+      parallaxOn = true;
+    }
+    if (y > hero.offsetHeight) return; // fuera de vista: no hace falta mover nada
+    for (const { el, speed } of scrollLayers) el.style.transform = `translateY(${y * speed}px)`;
+  });
+</script>

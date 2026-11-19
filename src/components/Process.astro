@@ -58,17 +58,20 @@ const pasos = [
       </div>
     </div>
 
-    <ol class="steps" role="list" data-steps>
-      {
-        pasos.map((p, i) => (
-          <li class:list={['step', { 'is-on': i === 0 }]} data-time={p.hora} data-day={p.dia.toUpperCase()}>
-            <span class="mono">Paso {i + 1} · {p.hora} · {p.dia}</span>
-            <h3>{p.titulo}</h3>
-            <p>{p.texto}</p>
-          </li>
-        ))
-      }
-    </ol>
+    <div class="flow">
+      <ol class="steps" role="list" data-steps>
+        {
+          pasos.map((p, i) => (
+            <li class:list={['step', { 'is-on': i === 0 }]} data-time={p.hora} data-day={p.dia.toUpperCase()}>
+              <span class="mono">Paso {i + 1} · {p.hora} · {p.dia}</span>
+              <h3>{p.titulo}</h3>
+              <p>{p.texto}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="btn btn-yolk flow-cta" href="#hoy">Armar mi pedido</a>
+    </div>
   </div>
 </section>
 
@@ -141,7 +144,9 @@ const pasos = [
   .frame :global(picture) { display: block; height: 100%; }
   .frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
 
-  .steps { padding-block: 18svh; }
+  .steps { padding-block: 18svh 0; }
+  /* La historia termina en la acción: del horno de piso al pedido */
+  .flow-cta { margin: 8px 0 14svh; }
   .step {
     display: flex;
     flex-direction: column;
@@ -176,8 +181,9 @@ const pasos = [
     .clock { display: flex; align-items: baseline; gap: 14px; font-size: 56px; }
     .clock small { margin-top: 0; }
     .frames { display: none; }
-    .steps { padding-block: 4svh 10svh; }
+    .steps { padding-block: 4svh 0; }
     .step { min-height: 46svh; }
+    .flow-cta { margin-bottom: 6svh; }
   }
 </style>
 

@@ -25,10 +25,17 @@ items.push(`Encargos hasta las ${Number(horarios.encargosHasta.split(':')[0])} h
       {items.map((t) => <li>{t}</li>)}
     </ul>
   </div>
+  <button class="pause" type="button" aria-label="Pausar la cinta" aria-pressed="false" data-ticker-pause>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path class="i-pause" d="M9 6v12M15 6v12" />
+      <path class="i-play" d="M8 5.5v13l10.5-6.5Z" />
+    </svg>
+  </button>
 </div>
 
 <style>
   .ticker {
+    position: relative;
     overflow: hidden;
     border-block: 1.5px solid var(--ink);
     background: var(--yolk);
@@ -40,7 +47,39 @@ items.push(`Encargos hasta las ${Number(horarios.encargosHasta.split(':')[0])} h
     width: max-content;
     animation: marquee 40s linear infinite;
   }
-  .ticker:hover .track { animation-play-state: paused; }
+  .ticker:hover .track,
+  .ticker.is-paused .track { animation-play-state: paused; }
+
+  /* Control de pausa: el texto se funde hacia el borde antes del botón */
+  .pause {
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    padding: 0 0 0 16px;
+    border: 0;
+    background: linear-gradient(90deg, transparent, var(--yolk) 28%);
+    color: var(--ink);
+  }
+  .pause svg {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: background-color .2s, color .2s;
+  }
+  .pause:hover svg { background: var(--ink); color: var(--yolk); }
+  .pause:focus-visible { outline-offset: -3px; outline-color: var(--ink); }
+  .pause .i-play { display: none; fill: currentColor; stroke: none; }
+  .is-paused .pause .i-play { display: block; }
+  .is-paused .pause .i-pause { display: none; }
 
   ul {
     display: flex;
@@ -63,7 +102,7 @@ items.push(`Encargos hasta las ${Number(horarios.encargosHasta.split(':')[0])} h
   @media (prefers-reduced-motion: reduce) {
     .ticker { white-space: normal; }
     .track { width: auto; }
-    ul[aria-hidden="true"] { display: none; }
+    ul[aria-hidden="true"], .pause { display: none; }
     ul {
       flex: 1;
       flex-wrap: wrap;
@@ -72,3 +111,12 @@ items.push(`Encargos hasta las ${Number(horarios.encargosHasta.split(':')[0])} h
     }
   }
 </style>
+
+<script>
+  const ticker = document.querySelector<HTMLElement>('.ticker')!;
+  const btn = ticker.querySelector<HTMLButtonElement>('[data-ticker-pause]')!;
+  btn.addEventListener('click', () => {
+    const paused = ticker.classList.toggle('is-paused');
+    btn.setAttribute('aria-pressed', String(paused));
+  });
+</script>

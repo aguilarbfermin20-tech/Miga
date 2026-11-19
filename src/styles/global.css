@@ -163,6 +163,18 @@ button { cursor: pointer; }
 
 main:focus { outline: none; }
 
+/* Superficies del navegador con la paleta de la marca */
+::selection { background: var(--yolk); color: var(--ink); }
+html {
+  accent-color: var(--olive);
+  caret-color: var(--olive);
+  scrollbar-color: var(--muted) var(--crumb);
+  /* El botón flotante no tapa el control que recibe foco cerca del borde inferior */
+  scroll-padding-bottom: 96px;
+}
+a { text-underline-offset: .18em; text-decoration-thickness: 1px; }
+:where(.mono, .price, .sub, .total, .clock, .hours) { font-variant-numeric: tabular-nums; }
+
 /* Secciones bajo el pliegue: el navegador no las calcula hasta que se acercan */
 .defer-render {
   content-visibility: auto;

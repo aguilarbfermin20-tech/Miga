@@ -177,6 +177,16 @@ const opciones = ['Hoy antes de las 20 h', 'Mañana a la mañana', 'Mañana a la
     border-bottom: 1px solid var(--crumb);
   }
   .lines :global(.line-name) { font-weight: 600; line-height: 1.3; }
+  .lines :global(.line-note) {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
   .lines :global(.qty) { display: flex; align-items: center; gap: 4px; }
   .lines :global(.qty button) {
     position: relative;
@@ -319,7 +329,10 @@ const opciones = ['Hoy antes de las 20 h', 'Mañana a la mañana', 'Mañana a la
       const out = el('output', undefined, String(p[id]));
       out.setAttribute('aria-label', `${p[id]} de ${prod.nombre}`);
       qty.append(qtyButton(id, prod.nombre, -1), out, qtyButton(id, prod.nombre, 1));
-      line.append(el('span', 'line-name', prod.nombre), qty, el('span', 'sub', money(prod.precio * p[id])));
+      const name = el('span', 'line-name', prod.nombre);
+      // Agotado: se encarga igual, pero queda claro que sale mañana
+      if (prod.agotado) name.append(el('small', 'line-note', prod.etiqueta));
+      line.append(name, qty, el('span', 'sub', money(prod.precio * p[id])));
       lines.append(line);
     }
 
@@ -375,7 +388,7 @@ const opciones = ['Hoy antes de las 20 h', 'Mañana a la mañana', 'Mañana a la
     toastEl.textContent = msg;
     toastEl.classList.add('is-shown');
     clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toastEl.classList.remove('is-shown'), 1800);
+    toastTimer = window.setTimeout(() => toastEl.classList.remove('is-shown'), 3000);
   }
 
   /* ---------- Cajón ---------- */

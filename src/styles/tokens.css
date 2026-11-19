@@ -17,9 +17,9 @@
   --closed: #B42318;
 
   /* Tipografía */
-  --serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --serif: "Fraunces Variable", "Fraunces Fallback", Georgia, serif;
   --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, Menlo, monospace;
   --fvs: "SOFT" 100, "WONK" 1;
 
   --fs-body: 17px;

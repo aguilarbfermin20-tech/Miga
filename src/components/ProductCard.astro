@@ -18,6 +18,7 @@ const { producto: p } = Astro.props;
       src={foto(p.foto)}
       formats={['avif', 'webp']}
       widths={[300, 450, 600, 900]}
+      quality={40}
       sizes="(max-width: 820px) 78vw, 360px"
       alt={p.alt}
       loading="lazy"

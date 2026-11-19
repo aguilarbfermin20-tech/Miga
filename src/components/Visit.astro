@@ -10,12 +10,13 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 const [calle, barrio] = h.direccion.split(', ');
 ---
 
-<section class="local" id="local" aria-labelledby="local-title" data-visit>
+<section class="local defer-render" id="local" aria-labelledby="local-title" data-visit>
   <div class="photo">
     <Picture
       src={localImg}
       formats={['avif', 'webp']}
       widths={[480, 800, 1200]}
+      quality={40}
       sizes="(max-width: 860px) 100vw, 55vw"
       alt="Mostrador de la panadería con panes y facturas del día"
       loading="lazy"

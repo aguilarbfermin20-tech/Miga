@@ -129,18 +129,17 @@
   const progress = document.querySelector<HTMLElement>('[data-progress]')!;
   const hero = document.querySelector<HTMLElement>('[data-hero]');
 
-  let heroH = hero?.offsetHeight ?? 0;
-  let maxScroll = 1;
+  let heroH = 0;
   const measure = () => {
     heroH = hero?.offsetHeight ?? 0;
-    maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
   };
-  measure();
   onResize(measure);
-  // La galería fija cambia el alto de la página cuando se mide: volvemos a medir al cargar
-  window.addEventListener('load', measure);
 
   onScroll((y) => {
+    if (!heroH) measure();
+    // El alto total cambia a medida que se dibujan las secciones diferidas: se lee en cada frame
+    // (el layout ya está limpio dentro del rAF, así que no fuerza un reflow).
+    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     progress.style.setProperty('--p', String(Math.min(y / maxScroll, 1)));
     nav.classList.toggle('is-solid', y > heroH - 80);
   });

@@ -5,7 +5,7 @@ import type { Resena } from '../lib/types';
 const lista = resenas as Resena[];
 ---
 
-<section class="quotes" aria-labelledby="resenas-title" data-reviews>
+<section class="quotes defer-render" aria-labelledby="resenas-title" data-reviews>
   <div class="wrap">
     <h2 id="resenas-title" class="mono kicker">Lo que dicen en el barrio</h2>
 
@@ -37,7 +37,7 @@ const lista = resenas as Resena[];
 </section>
 
 <style>
-  .quotes { padding-block: var(--section-pad); }
+  .quotes { padding-block: var(--section-pad); contain-intrinsic-size: auto 600px; }
   h2 { color: var(--olive); margin-bottom: 24px; letter-spacing: .08em; }
 
   .quote-box { min-height: 3.2em; }

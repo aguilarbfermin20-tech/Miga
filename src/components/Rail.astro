@@ -66,6 +66,9 @@ const total = String(lista.length).padStart(2, '0');
     .track-x { gap: 16px; }
     .track-x > :global(.card) { flex-basis: 78%; }
   }
+  @media (min-width: 561px) and (max-width: 820px) {
+    .track-x > :global(.card) { flex-basis: 44%; }
+  }
 
   /* Compu con JS: galería horizontal fija (docs/04-interacciones.md §2) */
   @media (min-width: 821px) {

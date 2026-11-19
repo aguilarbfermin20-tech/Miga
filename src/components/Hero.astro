@@ -16,13 +16,29 @@ const label = lines.map((l) => l.text).join(' ');
   // Oculta las letras antes del primer pintado solo si va a haber entrada animada
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches)
     document.documentElement.classList.add('hero-intro');
+
+  // La palabra gigante de fondo espera a Fraunces: así no salta de ancho al cambiar
+  // de fuente (CLS) ni se pinta dos veces a 560 px.
+  (function () {
+    var root = document.documentElement;
+    if (!document.fonts || !document.fonts.load) return;
+    root.classList.add('word-wait');
+    var show = function () {
+      var go = function () { root.classList.remove('word-wait'); };
+      if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 1000 });
+      else setTimeout(go, 0);
+    };
+    document.fonts.load('800 100px "Fraunces Variable"', 'miga').then(show, show);
+    setTimeout(show, 3000);
+  })();
 </script>
 <header class="hero grain" id="hero" data-hero>
   <div class="layer l-photo" data-depth="18" data-scroll-speed=".25" aria-hidden="true">
     <Picture
       src={heroImg}
       formats={['avif', 'webp']}
-      widths={[640, 960, 1280, 1800]}
+      widths={[640, 828, 1080, 1440, 1800]}
+      quality={35}
       sizes="112vw"
       alt=""
       loading="eager"
@@ -90,6 +106,7 @@ const label = lines.map((l) => l.text).join(' ');
   .l-photo :global(picture) { display: block; width: 100%; height: 100%; }
   .l-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
 
+  :global(.word-wait) .l-word { visibility: hidden; }
   .l-word {
     display: flex;
     align-items: center;

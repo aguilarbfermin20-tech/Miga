@@ -1,3 +1,23 @@
+/* Respaldo con métricas ajustadas: mientras cargan las fuentes, el texto ocupa casi lo mismo
+   y no se reacomoda al cambiar (CLS). Proporciones medidas contra Fraunces y JetBrains Mono. */
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  font-style: normal;
+  size-adjust: 83%;
+}
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia Italic"), local("Georgia-Italic"), local("Georgia");
+  font-style: italic;
+  size-adjust: 77%;
+}
+@font-face {
+  font-family: "JetBrains Mono Fallback";
+  src: local("Consolas"), local("Menlo");
+  size-adjust: 109%;
+}
+
 /* Reset mínimo + base */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -142,3 +162,9 @@ button { cursor: pointer; }
 }
 
 main:focus { outline: none; }
+
+/* Secciones bajo el pliegue: el navegador no las calcula hasta que se acercan */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}

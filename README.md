@@ -1,33 +1,58 @@
-# Miga · paquete para Claude Code
+# Miga · Panadería de masa madre
 
-Todo lo necesario para programar la landing de Miga Panadería con Claude Code.
+Landing de una panadería ficticia de Villa Crespo (CABA). Objetivo único: que la persona **arme un pedido y lo mande por WhatsApp**. Proyecto de portfolio: marca, datos y número de WhatsApp son de ejemplo.
 
-## Qué hay en la carpeta
+**Demo:** _pendiente de deploy en Vercel_
 
-| Ruta | Para qué |
-| --- | --- |
-| `CLAUDE.md` | Instrucciones que Claude Code lee solo al arrancar: stack, reglas y orden de lectura |
-| `docs/01-brief.md` | Concepto, público, objetivo y tono |
-| `docs/02-diseno.md` | Colores, tipografías, espaciado, radios y movimiento |
-| `docs/03-secciones.md` | Cada sección con su contenido y estructura |
-| `docs/04-interacciones.md` | Cada interacción: comportamiento, teclado, accesibilidad y celular |
-| `docs/05-plan.md` | Etapas de desarrollo con criterios de aceptación |
-| `docs/06-calidad.md` | Buenas prácticas de UX/UI, accesibilidad, SEO y rendimiento |
-| `data/` | Productos, horarios y reseñas en JSON |
-| `referencia/miga.html` | Prototipo funcional. Abrilo con doble clic para ver cómo tiene que quedar |
-| `public/img/` | Fotos de Unsplash (licencia libre, uso comercial permitido) |
+## Stack
 
-## Cómo arrancar
+- Astro 5 + TypeScript estricto, salida estática (una sola página).
+- CSS propio con tokens (`src/styles/tokens.css`) y estilos con scope por componente.
+- Interacciones en TypeScript vanilla (~5,5 KB comprimido en total).
+- Fuentes autohospedadas con Fontsource: Fraunces (variable), Hanken Grotesk y JetBrains Mono.
+- Imágenes con `astro:assets` → AVIF/WebP con `srcset`.
 
-1. Creá una carpeta vacía `miga`, copiá adentro todo este paquete y abrí una terminal ahí.
-2. Iniciá un repo: `git init`.
-3. Abrí Claude Code (`claude`) y pegale esto:
+## Comandos
 
-> Leé CLAUDE.md y todos los archivos de docs/ en orden. Abrí referencia/miga.html para ver el diseño. Después armá el proyecto Astro siguiendo la Etapa 1 de docs/05-plan.md y frená cuando la termines para que la revise.
+```
+npm install
+npm run dev       # http://localhost:4321
+npm run build
+npm run preview
+```
 
-4. Revisá cada etapa en `npm run dev` antes de decirle que siga con la próxima.
-5. Para publicar: subí el repo a GitHub e importalo en Vercel (detecta Astro solo).
+## Estructura
+
+```
+src/
+  pages/index.astro            página única
+  pages/robots.txt.ts          robots.txt
+  pages/sitemap.xml.ts         sitemap
+  layouts/Base.astro           head, meta, OG, JSON-LD Bakery, fuentes, skip link
+  components/                  Nav, Hero, Ticker, Rail, ProductCard, Process,
+                               Reviews, Visit, Footer, OrderDrawer
+  lib/cart.ts                  estado del pedido + mensaje de WhatsApp (localStorage)
+  lib/motion.ts                movimiento reducido, hover, un único listener de scroll
+  lib/types.ts  lib/format.ts  lib/images.ts
+  data/*.json                  productos, horarios, reseñas (fuente de contenido)
+  assets/img/                  fotos que procesa astro:assets
+docs/                          especificación (brief, diseño, secciones, interacciones, plan, calidad)
+referencia/miga.html           prototipo aprobado
+scripts/og.html                plantilla de la imagen OG (public/og.jpg)
+```
+
+## Decisiones respecto de la especificación
+
+- **Producto agotado:** la foto baja al 55 % de opacidad, pero el texto no, para mantener contraste AA.
+- **Pasos del proceso inactivos:** se atenúan con un color que sigue cumpliendo 4.5:1, en lugar de opacidad 0.28.
+- **Fraunces sin `preload`:** en Chrome, precargar la fuente bloqueaba el primer pintado (FCP de ~0,5 s a ~1,1 s). Se usan fuentes de respaldo con `size-adjust` para que el cambio de fuente no mueva el layout.
+- **Estado abierto/cerrado:** se calcula con la hora de Buenos Aires, no con la del navegador.
+- **Sin JS**, la galería funciona como carrusel con scroll-snap en todos los tamaños; la versión fija se activa con JS en ≥ 821 px.
+
+## Deploy
+
+Importar el repo en Vercel (detecta Astro, no necesita adaptador). La URL de producción se toma de `VERCEL_PROJECT_PRODUCTION_URL` para canonical, OG y sitemap. Después del primer deploy, completar el link de la demo arriba y correr PageSpeed Insights en celular.
 
 ## Créditos de fotos
 
-Todas de Unsplash. Si querés acreditar a cada fotógrafo, buscá la foto en unsplash.com con el ID que figura en `data/fotos.json`.
+Todas de Unsplash (licencia Unsplash). Los IDs de cada foto están en `data/fotos.json`.

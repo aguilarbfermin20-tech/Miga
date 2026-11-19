@@ -19,7 +19,7 @@
 ## Rendimiento
 - Hero: `<Image>` con `loading="eager"`, `fetchpriority="high"`, ancho máximo 1800 px, AVIF/WebP.
 - Resto de imágenes `loading="lazy"` con `sizes` correctos.
-- Fuentes autohospedadas, solo pesos usados, `font-display: swap`; precargá Fraunces.
+- Fuentes autohospedadas, solo pesos usados, `font-display: swap`; sin `preload` de fuentes (en Chrome bloquea el primer pintado); respaldos con `size-adjust` para evitar CLS.
 - JS total < 15 KB comprimido. Animar solo `transform` y `opacity` (excepción: `font-variation-settings` del titular, limitado a ~25 letras).
 - Listeners de scroll y puntero `{ passive: true }` + `requestAnimationFrame`.
 - Objetivos en celular: LCP < 2.0 s, CLS < 0.05, INP < 150 ms.

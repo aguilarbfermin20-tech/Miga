@@ -12,7 +12,7 @@ const { producto: p } = Astro.props;
 ---
 
 <article class:list={['card', { hot: p.recienSalido, out: p.agotado }]} data-card>
-  <div class="ph" data-tilt>
+  <div class="ph">
     <span class="when"><i aria-hidden="true"></i>{p.etiqueta}</span>
     <Picture
       src={foto(p.foto)}
@@ -49,22 +49,17 @@ const { producto: p } = Astro.props;
     overflow: hidden;
     border-radius: var(--r-card);
     background: #8A5428;
-    transition: transform .4s var(--ease), box-shadow .4s;
+    transition: box-shadow .3s;
   }
   .ph :global(picture) { display: block; height: 100%; }
   .ph :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform .8s var(--ease);
   }
 
   @media (hover: hover) {
     .card:hover .ph { box-shadow: var(--shadow-card); }
-    .card:hover h3 { font-weight: 650; }
-  }
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .card:hover .ph :global(img) { transform: scale(1.06); }
   }
 
   .when {
@@ -113,7 +108,6 @@ const { producto: p } = Astro.props;
   h3 {
     font-size: var(--fs-h3);
     line-height: 1;
-    transition: font-weight .3s;
   }
   .price {
     font-family: var(--mono);

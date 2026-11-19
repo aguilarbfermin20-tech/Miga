@@ -2,19 +2,15 @@
 
 Regla general: cada interacción define su comportamiento normal, con teclado, con lector de pantalla, en celular y con movimiento reducido. Helper `prefersReducedMotion()` en `src/lib/motion.ts`, leído una vez y escuchando cambios.
 
-## 1. Titular de peso variable + capas del hero
+## 1. Hero: capas quietas y entrada del titular
 
-**Normal (puntero fino, `(hover: hover)`):**
-- El H1 se divide en letras (`<span class="ch">`). En `pointermove` sobre el hero, cada letra calcula la distancia al puntero y ajusta `font-variation-settings: "wght"` entre 300 (lejos) y 900 (a ≤ 0 px), con radio de influencia 260 px. Transición CSS 250 ms. En `pointerleave` vuelve a 300.
-- Las capas con `data-depth` se desplazan `x * depth`, `y * depth` px según la posición normalizada del puntero (−0.5 a 0.5) usando la propiedad `translate`: foto 18, palabra "miga" −28, sello 40.
-- Al hacer scroll: foto `translateY(scrollY * .25)`, palabra `translateY(scrollY * -.12)`.
-- Entrada: cada letra entra desde `translateY(60%)` con opacidad 0, 700 ms, retraso `200 ms + i * 28 ms` (Web Animations API, `fill: backwards`).
+El hero no reacciona al puntero ni al scroll: foto, palabra "miga", sombra, sello y contenido quedan fijos.
+
+**Entrada (puntero fino, `(hover: hover)`):** el H1 se divide en letras (`<span class="ch">`) y cada una entra desde `translateY(60%)` con opacidad 0, 700 ms, retraso `200 ms + i * 28 ms` (Web Animations API, `fill: backwards`). Es el único momento orquestado de la página.
 
 **Accesibilidad:** el H1 lleva `aria-label` con el texto completo; los `span` de letras van dentro de contenedores `aria-hidden="true"`. Las capas decorativas `aria-hidden`.
 
-**Rendimiento:** un solo listener; agrupá lecturas de `getBoundingClientRect` antes de escribir estilos, o cacheá las posiciones de las letras en `resize`. Usá `requestAnimationFrame` para aplicar.
-
-**Movimiento reducido / táctil:** sin efecto de peso, sin parallax, sin entrada. Titular estático en 300.
+**Movimiento reducido / táctil:** sin entrada. Titular estático.
 
 ## 2. Galería horizontal fija ("Hoy en el horno")
 
@@ -24,11 +20,11 @@ Regla general: cada interacción define su comportamiento normal, con teclado, c
 - En scroll: `progreso = clamp(-rect.top / (alturaSeccion − innerHeight), 0, 1)`; el track se mueve `translateX(−progreso × extra)`.
 - Contador "0n / 06" y barra con `scaleX(progreso)`.
 - **Teclado:** al recibir foco una tarjeta fuera de vista (`focusin`), calcular el progreso que la deja a 30 % del borde izquierdo y hacer `scrollTo` a esa posición. Sin esto, el foco queda en algo invisible.
-- Tilt en hover sobre la foto: `perspective(800px) rotateY(x*8deg) rotateX(-y*8deg)`; la imagen escala 1.06; el nombre sube a peso 650.
+- Hover en la tarjeta: solo aparece una sombra suave bajo la foto. Nada se mueve, escala ni cambia de peso.
 
 **Celular (≤ 820 px):** sección de alto automático, track con `overflow-x: auto; scroll-snap-type: x mandatory`, tarjetas al 78 % de ancho con `scroll-snap-align: start`. Sin sticky ni transform. Sin contador.
 
-**Movimiento reducido:** igual que compu pero sin tilt ni zoom.
+**Movimiento reducido:** igual que compu.
 
 ## 3. Pedido (bolsa + cajón + WhatsApp) — interacción central
 
@@ -71,11 +67,11 @@ Botones anterior/siguiente con `aria-label`. Cambio con fundido + subida de 10 p
 
 En carga: día y hora local → fila de hoy resaltada y estado "Abierto ahora · cierra a las 20:00" / "Cerrado ahora · tomamos encargos por WhatsApp". Lunes cerrado.
 
-## 7. Nav, progreso, cinta, sello
+## 7. Nav, progreso, banda de horarios, sello
 
 - Nav sólida cuando `scrollY > alturaHero − 80`.
 - Barra de progreso: `scrollY / (scrollHeight − innerHeight)`.
-- Cinta: animación CSS, pausa en hover.
+- Banda de horarios: fija, sin animación.
 - Sello: rotación CSS 22 s infinita.
 - Todo el scroll en un solo listener `{ passive: true }` que agenda un `requestAnimationFrame`.
 
@@ -86,4 +82,4 @@ En carga: día y hora local → fila de hoy resaltada y estado "Abierto ahora ·
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 ```
-Más: en JS, no registrar parallax, peso variable, tilt ni entrada del titular.
+Más: en JS, no registrar la entrada del titular.

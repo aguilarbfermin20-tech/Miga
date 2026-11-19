@@ -8,14 +8,9 @@
   },
   "detector": {
     "ignoreRules": [],
-    "ignoreFiles": [],
-    "ignoreValues": [
-      {
-        "rule": "overused-font",
-        "value": "fraunces",
-        "createdAt": "2026-11-19T22:59:40.017Z",
-        "reason": "Fijada por el brief (docs/02-diseno.md); cubre Fraunces Variable y su respaldo"
-      }
-    ]
+    "ignoreFiles": [
+      "scripts/og.html"
+    ],
+    "ignoreValues": []
   }
 }

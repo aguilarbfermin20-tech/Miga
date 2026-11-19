@@ -117,7 +117,7 @@ const total = String(lista.length).padStart(2, '0');
 </style>
 
 <script>
-  import { allowsFancyMotion, clamp, onResize, onScroll } from '../lib/motion';
+  import { clamp, onResize, onScroll } from '../lib/motion';
 
   const rail = document.querySelector<HTMLElement>('[data-rail]')!;
   const track = rail.querySelector<HTMLElement>('[data-track]')!;
@@ -170,24 +170,5 @@ const total = String(lista.length).padStart(2, '0');
     const want = clamp((card.offsetLeft - window.innerWidth * 0.3) / extra, 0, 1);
     const top = rail.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: top + want * span, behavior: 'instant' });
-  });
-
-  /* Inclinación suave de la foto bajo el puntero */
-  track.addEventListener(
-    'pointermove',
-    (e) => {
-      if (e.pointerType !== 'mouse' || !allowsFancyMotion()) return;
-      const ph = (e.target as HTMLElement).closest<HTMLElement>('[data-tilt]');
-      if (!ph) return;
-      const r = ph.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      ph.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
-    },
-    { passive: true },
-  );
-  track.addEventListener('pointerout', (e) => {
-    const ph = (e.target as HTMLElement).closest<HTMLElement>('[data-tilt]');
-    if (ph && !ph.contains(e.relatedTarget as Node | null)) ph.style.transform = '';
   });
 </script>

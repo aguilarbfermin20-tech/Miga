@@ -9,7 +9,7 @@ Landing de una panadería ficticia de Villa Crespo (CABA). Objetivo único: que 
 - Astro 5 + TypeScript estricto, salida estática (una sola página).
 - CSS propio con tokens (`src/styles/tokens.css`) y estilos con scope por componente.
 - Interacciones en TypeScript vanilla (~5,5 KB comprimido en total).
-- Fuentes autohospedadas con Fontsource: Fraunces (variable), Hanken Grotesk y JetBrains Mono.
+- Fuentes autohospedadas con Fontsource: Bodoni Moda, Figtree y Martian Mono (las tres variables).
 - Imágenes con `astro:assets` → AVIF/WebP con `srcset`.
 
 ## Comandos
@@ -32,7 +32,7 @@ src/
   components/                  Nav, Hero, Ticker, Rail, ProductCard, Process,
                                Reviews, Visit, Footer, OrderDrawer
   lib/cart.ts                  estado del pedido + mensaje de WhatsApp (localStorage)
-  lib/motion.ts                movimiento reducido, hover, un único listener de scroll
+  lib/motion.ts                movimiento reducido y un único listener de scroll
   lib/types.ts  lib/format.ts  lib/images.ts
   data/*.json                  productos, horarios, reseñas (fuente de contenido)
   assets/img/                  fotos que procesa astro:assets
@@ -45,7 +45,9 @@ scripts/og.html                plantilla de la imagen OG (public/og.jpg)
 
 - **Producto agotado:** la foto baja al 55 % de opacidad, pero el texto no, para mantener contraste AA.
 - **Pasos del proceso inactivos:** se atenúan con un color que sigue cumpliendo 4.5:1, en lugar de opacidad 0.28.
-- **Fraunces sin `preload`:** en Chrome, precargar la fuente bloqueaba el primer pintado (FCP de ~0,5 s a ~1,1 s). Se usan fuentes de respaldo con `size-adjust` para que el cambio de fuente no mueva el layout.
+- **Movimiento contenido:** los hovers solo cambian color o sombra, el hero no reacciona al puntero ni al scroll y la banda de horarios es fija. La única animación orquestada es la entrada del titular.
+- **Tipografía:** Bodoni Moda (títulos), Figtree (texto) y Martian Mono (datos), elegidas para no repetir familias con otros proyectos del portfolio.
+- **Fuentes sin `preload`:** en Chrome, precargar la fuente bloqueaba el primer pintado (FCP de ~0,5 s a ~1,1 s). Se usan fuentes de respaldo con `size-adjust` para que el cambio de fuente no mueva el layout.
 - **Estado abierto/cerrado:** se calcula con la hora de Buenos Aires, no con la del navegador.
 - **Sin JS**, la galería funciona como carrusel con scroll-snap en todos los tamaños; la versión fija se activa con JS en ≥ 821 px.
 

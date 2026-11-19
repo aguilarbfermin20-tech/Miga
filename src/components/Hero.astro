@@ -17,7 +17,7 @@ const label = lines.map((l) => l.text).join(' ');
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches)
     document.documentElement.classList.add('hero-intro');
 
-  // La palabra gigante de fondo espera a Fraunces: así no salta de ancho al cambiar
+  // La palabra gigante de fondo espera a Bodoni Moda: así no salta de ancho al cambiar
   // de fuente (CLS) ni se pinta dos veces a 560 px.
   (function () {
     var root = document.documentElement;
@@ -28,29 +28,29 @@ const label = lines.map((l) => l.text).join(' ');
       if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 1000 });
       else setTimeout(go, 0);
     };
-    document.fonts.load('800 100px "Fraunces Variable"', 'miga').then(show, show);
+    document.fonts.load('700 100px "Bodoni Moda Variable"', 'miga').then(show, show);
     setTimeout(show, 3000);
   })();
 </script>
 <header class="hero grain" id="hero" data-hero>
-  <div class="layer l-photo" data-depth="18" data-scroll-speed=".25" aria-hidden="true">
+  <div class="layer l-photo" aria-hidden="true">
     <Picture
       src={heroImg}
       formats={['avif', 'webp']}
       widths={[640, 828, 1080, 1440, 1800]}
       quality={35}
-      sizes="112vw"
+      sizes="100vw"
       alt=""
       loading="eager"
       fetchpriority="high"
       decoding="async"
     />
   </div>
-  <div class="layer l-word" data-depth="-28" data-scroll-speed="-.12" aria-hidden="true">
+  <div class="layer l-word" aria-hidden="true">
     <span>miga</span>
   </div>
   <div class="layer l-shade" aria-hidden="true"></div>
-  <div class="seal" data-depth="40" aria-hidden="true">
+  <div class="seal" aria-hidden="true">
     <svg viewBox="0 0 200 200" focusable="false">
       <defs>
         <path id="seal-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"></path>
@@ -102,7 +102,6 @@ const label = lines.map((l) => l.text).join(' ');
   }
 
   .layer { position: absolute; inset: 0; }
-  .l-photo { inset: -6%; }
   .l-photo :global(picture) { display: block; width: 100%; height: 100%; }
   .l-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
 
@@ -116,8 +115,7 @@ const label = lines.map((l) => l.text).join(' ');
   .l-word span {
     font-family: var(--serif);
     font-size: min(38vw, 560px);
-    font-weight: 800;
-    font-variation-settings: var(--fvs);
+    font-weight: 700;
     line-height: .8;
     letter-spacing: -.04em;
     color: transparent;
@@ -130,11 +128,6 @@ const label = lines.map((l) => l.text).join(' ');
       linear-gradient(180deg, rgba(26, 21, 18, .65), rgba(26, 21, 18, .25) 40%, rgba(26, 21, 18, .92)),
       linear-gradient(90deg, rgba(26, 21, 18, .5), transparent 60%);
   }
-
-  /* Las capas que se mueven con puntero/scroll solo reservan GPU cuando hay efecto */
-  :global(.has-parallax) .l-photo,
-  :global(.has-parallax) .l-word,
-  :global(.has-parallax) .seal { will-change: transform, translate; }
 
   .seal {
     position: absolute;
@@ -152,7 +145,7 @@ const label = lines.map((l) => l.text).join(' ');
   .seal text {
     fill: var(--paper);
     font-family: var(--mono);
-    font-size: 14px;
+    font-size: 11.5px;
     font-weight: 500;
   }
   .seal b {
@@ -163,7 +156,6 @@ const label = lines.map((l) => l.text).join(' ');
     font-family: var(--serif);
     font-size: 40px;
     font-weight: 600;
-    font-variation-settings: "SOFT" 100;
     color: var(--yolk);
   }
   @keyframes turn { to { transform: rotate(360deg); } }
@@ -181,15 +173,10 @@ const label = lines.map((l) => l.text).join(' ');
 
   .headline {
     font-size: var(--fs-h1);
-    cursor: default;
   }
   .headline .line { display: block; }
   .headline .w { display: inline-block; white-space: nowrap; }
-  .headline .ch {
-    display: inline-block;
-    font-weight: 300;
-    transition: font-weight .25s ease-out;
-  }
+  .headline .ch { display: inline-block; }
   .headline .gold { color: var(--yolk); font-style: italic; }
   :global(.hero-intro) .headline .ch { opacity: 0; }
 
@@ -237,27 +224,11 @@ const label = lines.map((l) => l.text).join(' ');
 </style>
 
 <script>
-  import { allowsFancyMotion, onResize, onScroll } from '../lib/motion';
-
-  const hero = document.querySelector<HTMLElement>('[data-hero]')!;
-  const chars = [...hero.querySelectorAll<HTMLElement>('.headline .ch')];
-  const depthLayers = [...hero.querySelectorAll<HTMLElement>('[data-depth]')].map((el) => ({
-    el,
-    depth: Number(el.dataset.depth),
-  }));
-  const scrollLayers = [...hero.querySelectorAll<HTMLElement>('[data-scroll-speed]')].map((el) => ({
-    el,
-    speed: Number(el.dataset.scrollSpeed),
-  }));
-
-  const RADIUS = 260;
-  const REST = 300;
-  const MAX = 900;
-
-  /* ---------- Entrada escalonada del titular ---------- */
+  /* Única animación del hero: la entrada del titular letra por letra (solo con puntero
+     fino y sin movimiento reducido; el script inline del head ya ocultó las letras). */
   const root = document.documentElement;
   if (root.classList.contains('hero-intro')) {
-    chars.forEach((ch, i) => {
+    document.querySelectorAll<HTMLElement>('[data-hero] .headline .ch').forEach((ch, i) => {
       ch.animate(
         [
           { transform: 'translateY(60%)', opacity: 0 },
@@ -269,80 +240,4 @@ const label = lines.map((l) => l.text).join(' ');
     // fill: backwards mantiene el estado inicial durante el retraso, así que ya podemos soltar la clase
     root.classList.remove('hero-intro');
   }
-
-  /* ---------- Posiciones cacheadas de las letras (coordenadas de página) ---------- */
-  let centers: { x: number; y: number }[] = [];
-  function measure() {
-    const sx = window.scrollX;
-    const sy = window.scrollY;
-    centers = chars.map((ch) => {
-      const r = ch.getBoundingClientRect();
-      return { x: r.left + r.width / 2 + sx, y: r.top + r.height / 2 + sy };
-    });
-  }
-  measure();
-  onResize(measure);
-  document.fonts?.ready.then(measure);
-
-  /* ---------- Puntero: peso variable + capas ---------- */
-  let px = 0;
-  let py = 0;
-  let pending = false;
-  let active = false;
-
-  function applyPointer() {
-    pending = false;
-    if (!active) return;
-    const sx = window.scrollX;
-    const sy = window.scrollY;
-    for (let i = 0; i < chars.length; i++) {
-      const c = centers[i];
-      const d = Math.hypot(px + sx - c.x, py + sy - c.y);
-      const w = Math.round(REST + (MAX - REST) * Math.max(0, 1 - d / RADIUS));
-      chars[i].style.fontWeight = String(w);
-    }
-    const nx = px / window.innerWidth - 0.5;
-    const ny = py / window.innerHeight - 0.5;
-    for (const { el, depth } of depthLayers) el.style.translate = `${nx * depth}px ${ny * depth}px`;
-  }
-
-  hero.addEventListener(
-    'pointermove',
-    (e) => {
-      if (e.pointerType !== 'mouse' || !allowsFancyMotion()) return;
-      active = true;
-      px = e.clientX;
-      py = e.clientY;
-      if (!pending) {
-        pending = true;
-        requestAnimationFrame(applyPointer);
-      }
-    },
-    { passive: true },
-  );
-
-  hero.addEventListener('pointerleave', () => {
-    active = false;
-    chars.forEach((ch) => (ch.style.fontWeight = ''));
-  });
-
-  /* ---------- Scroll: parallax de foto y palabra ---------- */
-  let parallaxOn = false;
-  onScroll((y) => {
-    if (!allowsFancyMotion()) {
-      if (parallaxOn) {
-        scrollLayers.forEach(({ el }) => (el.style.transform = ''));
-        depthLayers.forEach(({ el }) => (el.style.translate = ''));
-        root.classList.remove('has-parallax');
-        parallaxOn = false;
-      }
-      return;
-    }
-    if (!parallaxOn) {
-      root.classList.add('has-parallax');
-      parallaxOn = true;
-    }
-    if (y > hero.offsetHeight) return; // fuera de vista: no hace falta mover nada
-    for (const { el, speed } of scrollLayers) el.style.transform = `translateY(${y * speed}px)`;
-  });
 </script>

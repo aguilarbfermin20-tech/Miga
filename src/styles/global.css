@@ -1,21 +1,26 @@
 /* Respaldo con métricas ajustadas: mientras cargan las fuentes, el texto ocupa casi lo mismo
-   y no se reacomoda al cambiar (CLS). Proporciones medidas contra Fraunces y JetBrains Mono. */
+   y no se reacomoda al cambiar (CLS). Proporciones medidas contra Bodoni Moda, Figtree y Martian Mono. */
 @font-face {
-  font-family: "Fraunces Fallback";
+  font-family: "Bodoni Moda Fallback";
   src: local("Georgia");
   font-style: normal;
-  size-adjust: 83%;
+  size-adjust: 102%;
 }
 @font-face {
-  font-family: "Fraunces Fallback";
+  font-family: "Bodoni Moda Fallback";
   src: local("Georgia Italic"), local("Georgia-Italic"), local("Georgia");
   font-style: italic;
-  size-adjust: 77%;
+  size-adjust: 96%;
 }
 @font-face {
-  font-family: "JetBrains Mono Fallback";
+  font-family: "Figtree Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  size-adjust: 99%;
+}
+@font-face {
+  font-family: "Martian Mono Fallback";
   src: local("Consolas"), local("Menlo");
-  size-adjust: 109%;
+  size-adjust: 127%;
 }
 
 /* Reset mínimo + base */
@@ -51,12 +56,11 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 h1, h2, h3 {
   font-family: var(--serif);
   font-weight: 400;
-  font-variation-settings: var(--fvs);
   line-height: .9;
   text-wrap: balance;
 }
 
-h1, h2 { font-weight: 300; letter-spacing: -.02em; }
+h1, h2 { letter-spacing: -.02em; }
 
 img, svg, picture { display: block; max-width: 100%; }
 img { height: auto; }
@@ -130,14 +134,16 @@ button { cursor: pointer; }
   text-decoration: none;
   text-align: center;
   cursor: pointer;
-  transition: transform var(--t-micro) var(--ease), background-color .2s, color .2s;
+  transition: background-color .2s, color .2s, box-shadow .2s;
 }
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: scale(.97); }
-.btn:disabled, .btn[aria-disabled="true"] { cursor: not-allowed; transform: none; }
+/* Hover sin desplazamiento: solo cambia el color */
+.btn:disabled, .btn[aria-disabled="true"] { cursor: not-allowed; }
 .btn-yolk { background: var(--yolk); color: var(--ink); }
+.btn-yolk:hover:not(:disabled) { background: var(--yolk-deep); }
 .btn-ink { background: var(--ink); color: var(--paper); }
+.btn-ink:hover { background: var(--ink-soft); }
 .btn-line { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+.btn-line:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
 
 .btn svg { width: 20px; height: 20px; flex: none; }
 

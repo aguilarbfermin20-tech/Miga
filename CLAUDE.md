@@ -20,7 +20,7 @@ Leé en orden: `docs/01-brief.md` → `02-diseno.md` → `03-secciones.md` → `
 - **Astro 5** con TypeScript (salida estática). Una página: `src/pages/index.astro`.
 - **CSS propio** con variables (tokens de `docs/02-diseno.md`) en `src/styles/tokens.css` y un archivo por componente o `<style>` de Astro con scope. Sin Tailwind ni librerías de UI.
 - Interacciones en **TypeScript vanilla** dentro de `<script>` de cada componente. Sin React, sin GSAP, sin jQuery. Si una animación se puede hacer con CSS, va en CSS.
-- Fuentes con `@fontsource-variable/fraunces`, `@fontsource/hanken-grotesk` y `@fontsource/jetbrains-mono` (autohospedadas, no Google Fonts por link).
+- Fuentes con `@fontsource-variable/bodoni-moda`, `@fontsource-variable/figtree` y `@fontsource-variable/martian-mono` (autohospedadas, no Google Fonts por link).
 - Imágenes con `astro:assets` (`<Image />`) para generar WebP/AVIF y `srcset`.
 - Deploy en **Vercel** (adaptador estático, sin servidor).
 
@@ -54,7 +54,7 @@ public/img/ → fotos
 
 ```
 npm create astro@latest miga -- --template minimal --typescript strict
-npm i @fontsource-variable/fraunces @fontsource/hanken-grotesk @fontsource/jetbrains-mono
+npm i @fontsource-variable/bodoni-moda @fontsource-variable/figtree @fontsource-variable/martian-mono
 npm run dev      # http://localhost:4321
 npm run build && npm run preview
 ```

@@ -1,6 +1,6 @@
 # 02 · Diseño
 
-Dirección: **revista de panadería viva**. Fotos grandes, tipografía serif variable que reacciona, capas que se mueven con el puntero y el scroll. Un solo tema claro elegido a propósito (no hay modo oscuro), con bandas oscuras para el hero y el proceso.
+Dirección: **revista de panadería viva**. Fotos grandes, una serif de alto contraste como protagonista y capas superpuestas quietas. Un solo tema claro elegido a propósito (no hay modo oscuro), con bandas oscuras para el hero y el proceso.
 
 ## Colores (`src/styles/tokens.css`)
 
@@ -21,11 +21,11 @@ Contraste: todo texto de cuerpo ≥ 4.5:1. El amarillo nunca lleva texto blanco 
 
 | Rol | Fuente | Detalle |
 | --- | --- | --- |
-| Display | **Fraunces** variable | Ejes `wght` 200–900, `SOFT` 100, `WONK` 1. Peso de reposo 300 en títulos grandes. Itálica para la palabra destacada |
-| Cuerpo | **Hanken Grotesk** | 400/500/600/700, 17 px base, interlineado 1.6 |
-| Datos | **JetBrains Mono** | Horarios, precios, etiquetas: 11–15 px, mayúsculas, `letter-spacing: .06–.08em` |
+| Display | **Bodoni Moda** variable | Ejes `opsz` 6–96 (automático) y `wght` 400–900. Peso 400 en títulos. Itálica para la palabra destacada |
+| Cuerpo | **Figtree** variable | 400/600, 17 px base, interlineado 1.6 |
+| Datos | **Martian Mono** variable | Horarios, precios, etiquetas: 11–15 px, mayúsculas, `letter-spacing: .02–.08em` (es ancha: compensar con tamaño) |
 
-Escala de títulos (clamp): H1 `clamp(60px, 10.5vw, 168px)`, H2 `clamp(56px, 8vw, 128px)`, H3 tarjeta 32 px. Interlineado de títulos 0.9. `text-wrap: balance` en todos los títulos.
+Escala de títulos (clamp): H1 `clamp(56px, 8.4vw, 140px)`, H2 `clamp(56px, 8vw, 128px)`, H3 tarjeta 32 px. Interlineado de títulos 0.9. `text-wrap: balance` en todos los títulos.
 
 ## Espaciado y forma
 
@@ -40,7 +40,8 @@ Escala de títulos (clamp): H1 `clamp(60px, 10.5vw, 168px)`, H2 `clamp(56px, 8vw
 - Curva única: `--ease: cubic-bezier(.2,.8,.2,1)`.
 - Duraciones: microinteracciones 200–300 ms, entradas 700–900 ms, cajón 450 ms.
 - Un momento orquestado: la entrada del titular letra por letra (28 ms entre letras). El resto es respuesta a lo que hace el usuario.
-- Con `prefers-reduced-motion: reduce`: sin parallax, sin rotación del sello, sin cinta animada, sin entradas; los cambios de estado son instantáneos.
+- Hovers sin desplazamiento: cambian color o sombra, nunca posición, escala, inclinación ni peso. Sin parallax ni efectos de puntero. La banda de horarios es fija.
+- Con `prefers-reduced-motion: reduce`: sin rotación del sello, sin entradas; los cambios de estado son instantáneos.
 
 ## Íconos
 

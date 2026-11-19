@@ -7,27 +7,27 @@ Línea de 4 px fija arriba, degradé `--yolk` → `--hot`, `transform: scaleX(pr
 
 ## 1. Nav (`Nav.astro`)
 - Fija arriba. Transparente con texto claro sobre el hero; cuando el scroll pasa el hero se vuelve sólida (`--paper` 86 % + `backdrop-filter: blur(14px)`) con texto `--ink`.
-- Izquierda: logo "miga." (Fraunces 34 px, punto en `--yolk`).
+- Izquierda: logo "miga." (Bodoni Moda 34 px, punto en `--yolk`).
 - Centro (oculto < 760 px): Hoy en el horno · Cómo lo hacemos · Horarios. Subrayado amarillo que crece en hover.
 - Derecha: botón **"Tu pedido"** con contador (pastilla amarilla). Abre el cajón del pedido.
 
 ## 2. Hero (`Hero.astro`)
 Capas (de atrás hacia adelante): foto `hero.jpg` · palabra **"miga"** gigante calada (borde amarillo 45 %) · sombra en degradé · sello giratorio · contenido.
 - Kicker: no lleva.
-- H1: **"Pan de verdad,"** / **"a las 7."** (segunda línea en itálica `--yolk`). Fraunces peso 300 en reposo.
+- H1: **"Pan de verdad,"** / **"a las 7."** (segunda línea en itálica `--yolk`). Bodoni Moda peso 400.
 - Bajada: "Masa madre, harina de molino chico, agua, sal y tiempo. Horneamos todos los días en Villa Crespo."
 - Botones: **"Armar mi pedido"** (amarillo, lleva a la galería) y **"Cómo lo hacemos"** (borde).
 - Sello: texto circular "MASA MADRE · 36 HORAS · HORNO DE PISO ·" y "36h" al centro.
 - Indicador "Bajá" con línea que gotea (oculto en celular).
 - Alto mínimo 680 px (620 en celular). Contenido alineado abajo.
 
-## 3. Cinta (`Ticker.astro`)
-Banda amarilla con borde `--ink` arriba y abajo. Mono 13 px mayúsculas. Contenido desde `data/productos.json` → "7:00 hogaza de campo ✶ 7:40 medialunas ✶ … ✶ Encargos hasta las 20 h". Desplazamiento infinito 40 s, se pausa en hover. Lista duplicada con `aria-hidden` para el loop.
+## 3. Banda de horarios (`Ticker.astro`)
+Banda amarilla con borde `--ink` arriba y abajo. Mono 13 px mayúsculas. Contenido desde `data/productos.json` → "7:00 hogaza de campo ✶ 7:40 medialunas ✶ … ✶ Encargos hasta las 20 h". Fija, sin desplazamiento: los horarios se reparten a lo ancho y en celular pasan a varias líneas.
 
 ## 4. Hoy en el horno (`Rail.astro` + `ProductCard.astro`)
 - H2: "Hoy en el *horno*" (itálica `--olive`). Texto: "Sumá lo que quieras a tu pedido y mandalo por WhatsApp. Te lo guardamos hasta las 20 h."
 - Galería horizontal fija en compu (ver `04-interacciones.md` §2). En celular, carrusel con scroll-snap.
-- Tarjeta: etiqueta de horario arriba a la izquierda sobre la foto (punto naranja que late si es "recién salido"), foto 4:5, nombre (Fraunces 32 px), precio (mono), descripción, botón **"+ Sumar al pedido"**. Cuando está en el pedido: **"✓ En tu pedido (n)"** con fondo `--olive`.
+- Tarjeta: etiqueta de horario arriba a la izquierda sobre la foto (punto naranja que late si es "recién salido"), foto 4:5, nombre (Bodoni Moda 32 px), precio (mono), descripción, botón **"+ Sumar al pedido"**. Cuando está en el pedido: **"✓ En tu pedido (n)"** con fondo `--olive`.
 - Producto agotado (baguette): opacidad 55 %, botón con borde punteado; igual se puede sumar como encargo para mañana.
 - Contador abajo: "01 / 06" + barra de progreso de la galería.
 
@@ -45,7 +45,7 @@ Dos columnas: izquierda fija (reloj grande mono amarillo + "DÍA 1/2" + foto que
 Fotos por paso: `panes-surtidos.jpg`, `centeno.jpg`, `hogaza.jpg`, `hero.jpg`.
 
 ## 6. Reseñas (`Reviews.astro`)
-Kicker "Lo que dicen en el barrio". Una reseña grande por vez (Fraunces 36–80 px, final en itálica `--olive`), botones ← → (48 px, circulares), autor y puntos de posición. Contenido en `data/resenas.json`.
+Kicker "Lo que dicen en el barrio". Una reseña grande por vez (Bodoni Moda 36–80 px, final en itálica `--olive`), botones ← → (48 px, circulares), autor y puntos de posición. Contenido en `data/resenas.json`.
 
 ## 7. Visitanos (`Visit.astro`)
 Dos columnas: foto `local.jpg` a sangre + panel `--crumb`.

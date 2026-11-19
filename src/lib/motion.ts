@@ -1,7 +1,6 @@
 /* Helpers de movimiento compartidos por todos los componentes. */
 
 const reduceQuery = matchMedia('(prefers-reduced-motion: reduce)');
-const hoverQuery = matchMedia('(hover: hover) and (pointer: fine)');
 
 let reduced = reduceQuery.matches;
 reduceQuery.addEventListener('change', (e) => {
@@ -10,12 +9,6 @@ reduceQuery.addEventListener('change', (e) => {
 
 /** true si la persona pidió menos movimiento. Se actualiza en vivo. */
 export const prefersReducedMotion = (): boolean => reduced;
-
-/** true si hay puntero fino con hover (no táctil). */
-export const canHover = (): boolean => hoverQuery.matches;
-
-/** Efectos de puntero/parallax: solo con hover y sin movimiento reducido. */
-export const allowsFancyMotion = (): boolean => canHover() && !reduced;
 
 export const clamp = (n: number, min: number, max: number): number =>
   Math.min(Math.max(n, min), max);

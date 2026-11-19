@@ -16,14 +16,18 @@
   --on-ink-dim: #8F857A;
   --closed: #B42318;
 
+  /* Estados hover (sin movimiento: solo color) */
+  --yolk-deep: #DFA10C;
+  --ink-soft: #3A302A;
+  --wa-deep: #18723E;
+
   /* Tipografía */
-  --serif: "Fraunces Variable", "Fraunces Fallback", Georgia, serif;
-  --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, Menlo, monospace;
-  --fvs: "SOFT" 100, "WONK" 1;
+  --serif: "Bodoni Moda Variable", "Bodoni Moda Fallback", Didot, "Bodoni 72", Georgia, serif;
+  --sans: "Figtree Variable", "Figtree Fallback", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Martian Mono Variable", "Martian Mono Fallback", ui-monospace, Menlo, monospace;
 
   --fs-body: 17px;
-  --fs-h1: clamp(60px, 10.5vw, 168px);
+  --fs-h1: clamp(56px, 8.4vw, 140px);
   --fs-h2: clamp(56px, 8vw, 128px);
   --fs-h3: 32px;
 

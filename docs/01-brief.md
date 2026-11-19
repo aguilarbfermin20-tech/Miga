@@ -22,7 +22,7 @@ Cálido, directo, de barrio. Sin palabras de marketing ("experiencia", "artesana
 
 ## Qué tiene que demostrar en el portfolio
 
-- Dirección de arte editorial con tipografía como protagonista (Fraunces variable).
+- Dirección de arte editorial con tipografía como protagonista (Bodoni Moda variable).
 - Interacciones que suman al negocio, no adorno: el pedido es funcional, la galería muestra el horno del día, el reloj cuenta el proceso.
 - Accesibilidad y rendimiento a pesar de las animaciones.
 

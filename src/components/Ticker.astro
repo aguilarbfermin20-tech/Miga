@@ -16,107 +16,42 @@ const items = (productos as Producto[])
 items.push(`Encargos hasta las ${Number(horarios.encargosHasta.split(':')[0])} h`);
 ---
 
+<!-- Banda fija con los horarios del día: se lee de un vistazo, sin texto en movimiento -->
 <div class="ticker">
-  <div class="track">
-    <ul role="list" aria-label="Horarios de horneado de hoy">
-      {items.map((t) => <li>{t}</li>)}
-    </ul>
-    <ul role="list" aria-hidden="true">
-      {items.map((t) => <li>{t}</li>)}
-    </ul>
-  </div>
-  <button class="pause" type="button" aria-label="Pausar la cinta" aria-pressed="false" data-ticker-pause>
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path class="i-pause" d="M9 6v12M15 6v12" />
-      <path class="i-play" d="M8 5.5v13l10.5-6.5Z" />
-    </svg>
-  </button>
+  <ul class="wrap" role="list" aria-label="Horarios de horneado de hoy">
+    {items.map((t) => <li>{t}</li>)}
+  </ul>
 </div>
 
 <style>
   .ticker {
-    position: relative;
-    overflow: hidden;
     border-block: 1.5px solid var(--ink);
     background: var(--yolk);
     color: var(--ink);
-    white-space: nowrap;
   }
-  .track {
-    display: flex;
-    width: max-content;
-    animation: marquee 40s linear infinite;
-  }
-  .ticker:hover .track,
-  .ticker.is-paused .track { animation-play-state: paused; }
-
-  /* Control de pausa: el texto se funde hacia el borde antes del botón */
-  .pause {
-    position: absolute;
-    inset: 0 0 0 auto;
-    display: grid;
-    place-items: center;
-    width: 64px;
-    padding: 0 0 0 16px;
-    border: 0;
-    background: linear-gradient(90deg, transparent, var(--yolk) 28%);
-    color: var(--ink);
-  }
-  .pause svg {
-    width: 30px;
-    height: 30px;
-    padding: 6px;
-    border: 1.5px solid var(--ink);
-    border-radius: 50%;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: background-color .2s, color .2s;
-  }
-  .pause:hover svg { background: var(--ink); color: var(--yolk); }
-  .pause:focus-visible { outline-offset: -3px; outline-color: var(--ink); }
-  .pause .i-play { display: none; fill: currentColor; stroke: none; }
-  .is-paused .pause .i-play { display: block; }
-  .is-paused .pause .i-pause { display: none; }
 
   ul {
     display: flex;
-    flex: none;
-    gap: 48px;
-    padding: 14px 48px 14px 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px 24px;
+    padding-block: 14px;
   }
   li {
     font-family: var(--mono);
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: .06em;
+    letter-spacing: .02em;
     text-transform: uppercase;
+    white-space: nowrap;
   }
-  li::before { content: "✶"; margin-right: 14px; }
+  li::before { content: "✶"; margin-right: 8px; }
 
-  @keyframes marquee { to { transform: translateX(-50%); } }
-
-  /* Sin animación, la cinta queda quieta y muestra todo en varias líneas */
-  @media (prefers-reduced-motion: reduce) {
-    .ticker { white-space: normal; }
-    .track { width: auto; }
-    ul[aria-hidden="true"], .pause { display: none; }
-    ul {
-      flex: 1;
-      flex-wrap: wrap;
-      gap: 6px 32px;
-      padding-inline: var(--gutter-l) var(--gutter-r);
-    }
+  /* En una sola línea, los horarios se reparten a lo ancho */
+  @media (min-width: 1200px) {
+    ul { justify-content: space-between; }
+  }
+  @media (max-width: 760px) {
+    ul { gap: 6px 20px; }
   }
 </style>
-
-<script>
-  const ticker = document.querySelector<HTMLElement>('.ticker')!;
-  const btn = ticker.querySelector<HTMLButtonElement>('[data-ticker-pause]')!;
-  btn.addEventListener('click', () => {
-    const paused = ticker.classList.toggle('is-paused');
-    btn.setAttribute('aria-pressed', String(paused));
-  });
-</script>

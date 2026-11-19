@@ -177,3 +177,31 @@ const pasos = [
     .step { min-height: 46svh; }
   }
 </style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-process]')!;
+  const stepsList = root.querySelector<HTMLElement>('[data-steps]')!;
+  const steps = [...stepsList.querySelectorAll<HTMLElement>('.step')];
+  const frames = [...root.querySelectorAll<HTMLElement>('[data-frame]')];
+  const clock = root.querySelector<HTMLElement>('[data-clock]')!;
+  const day = root.querySelector<HTMLElement>('[data-day]')!;
+
+  let activeIdx = 0;
+  function activate(i: number) {
+    if (i === activeIdx) return;
+    activeIdx = i;
+    steps.forEach((s, j) => s.classList.toggle('is-on', j === i));
+    frames.forEach((f, j) => f.classList.toggle('is-on', j === i));
+    clock.textContent = steps[i].dataset.time ?? '';
+    day.textContent = steps[i].dataset.day ?? '';
+  }
+
+  stepsList.classList.add('is-live');
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) if (e.isIntersecting) activate(steps.indexOf(e.target as HTMLElement));
+    },
+    { rootMargin: '-45% 0px -45% 0px' },
+  );
+  steps.forEach((s) => io.observe(s));
+</script>

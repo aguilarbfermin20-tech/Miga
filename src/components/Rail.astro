@@ -112,3 +112,79 @@ const total = String(lista.length).padStart(2, '0');
     }
   }
 </style>
+
+<script>
+  import { allowsFancyMotion, clamp, onResize, onScroll } from '../lib/motion';
+
+  const rail = document.querySelector<HTMLElement>('[data-rail]')!;
+  const track = rail.querySelector<HTMLElement>('[data-track]')!;
+  const num = rail.querySelector<HTMLElement>('[data-rail-num]')!;
+  const bar = rail.querySelector<HTMLElement>('[data-rail-bar]')!;
+  const cards = [...track.querySelectorAll<HTMLElement>('[data-card]')];
+  const wide = matchMedia('(min-width: 821px)');
+  const total = String(cards.length).padStart(2, '0');
+
+  let pinned = false;
+  let extra = 0; // cuánto se desplaza el track en horizontal
+  let span = 1; // cuánto scroll vertical consume la sección fija
+
+  function setup() {
+    pinned = wide.matches;
+    rail.classList.toggle('is-pinned', pinned);
+    if (!pinned) {
+      rail.style.removeProperty('--rail-h');
+      track.style.transform = '';
+      return;
+    }
+    extra = Math.max(track.offsetWidth - document.documentElement.clientWidth, 0);
+    rail.style.setProperty('--rail-h', `${window.innerHeight + extra}px`);
+    span = Math.max(window.innerHeight + extra - window.innerHeight, 1);
+  }
+
+  function progress() {
+    return clamp(-rail.getBoundingClientRect().top / span, 0, 1);
+  }
+
+  setup();
+  onResize(setup);
+  wide.addEventListener('change', setup);
+
+  onScroll(() => {
+    if (!pinned) return;
+    const pr = progress();
+    track.style.transform = `translateX(${-pr * extra}px)`;
+    bar.style.setProperty('--rp', String(pr));
+    num.textContent = `${String(Math.round(pr * (cards.length - 1)) + 1).padStart(2, '0')} / ${total}`;
+  });
+
+  /* Teclado: si el foco cae en una tarjeta fuera de vista, llevamos el scroll hasta ella */
+  track.addEventListener('focusin', (e) => {
+    if (!pinned || !extra) return;
+    const card = (e.target as HTMLElement).closest<HTMLElement>('[data-card]');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    if (r.left >= 0 && r.right <= window.innerWidth) return;
+    const want = clamp((card.offsetLeft - window.innerWidth * 0.3) / extra, 0, 1);
+    const top = rail.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + want * span, behavior: 'instant' });
+  });
+
+  /* Inclinación suave de la foto bajo el puntero */
+  track.addEventListener(
+    'pointermove',
+    (e) => {
+      if (e.pointerType !== 'mouse' || !allowsFancyMotion()) return;
+      const ph = (e.target as HTMLElement).closest<HTMLElement>('[data-tilt]');
+      if (!ph) return;
+      const r = ph.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      ph.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+    },
+    { passive: true },
+  );
+  track.addEventListener('pointerout', (e) => {
+    const ph = (e.target as HTMLElement).closest<HTMLElement>('[data-tilt]');
+    if (ph && !ph.contains(e.relatedTarget as Node | null)) ph.style.transform = '';
+  });
+</script>

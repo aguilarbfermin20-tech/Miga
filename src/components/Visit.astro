@@ -142,3 +142,53 @@ const [calle, barrio] = h.direccion.split(', ');
     .info { padding: 48px var(--gutter-r) 56px var(--gutter-l); }
   }
 </style>
+
+<script>
+  import horarios from '../data/horarios.json';
+  import type { Horarios, NombreDia } from '../lib/types';
+
+  const h = horarios as Horarios;
+  const root = document.querySelector<HTMLElement>('[data-visit]')!;
+  const status = root.querySelector<HTMLElement>('[data-open]')!;
+  const statusText = root.querySelector<HTMLElement>('[data-open-text]')!;
+
+  // Hora local del local (Buenos Aires), no la del navegador: si alguien abre la página
+  // desde otro huso, igual ve si la panadería está abierta en este momento.
+  const ZONA = 'America/Argentina/Buenos_Aires';
+  const DIAS: NombreDia[] = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const aMin = (s: string) => {
+    const [hh, mm] = s.split(':').map(Number);
+    return hh * 60 + mm;
+  };
+
+  function update() {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: ZONA,
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(new Date());
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const idx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+    const ahora = Number(get('hour')) * 60 + Number(get('minute'));
+    const nombre = DIAS[idx];
+    const hoy = h.dias.find((d) => d.dia === nombre);
+
+    root.querySelectorAll<HTMLElement>('tr[data-dia]').forEach((tr) => {
+      const esHoy = tr.dataset.dia === nombre;
+      tr.classList.toggle('is-today', esHoy);
+      tr.querySelector<HTMLElement>('[data-today-mark]')!.hidden = !esHoy;
+    });
+
+    const abierto = !!hoy?.abre && !!hoy.cierra && ahora >= aMin(hoy.abre) && ahora < aMin(hoy.cierra);
+    status.classList.toggle('is-closed', !abierto);
+    statusText.textContent = abierto
+      ? `Abierto ahora · cierra a las ${hoy!.cierra}`
+      : 'Cerrado ahora · tomamos encargos por WhatsApp';
+    status.hidden = false;
+  }
+
+  update();
+  window.setInterval(update, 60_000);
+</script>

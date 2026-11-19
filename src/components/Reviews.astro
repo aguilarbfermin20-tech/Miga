@@ -95,3 +95,47 @@ const lista = resenas as Resena[];
   }
   .dots i.is-on { background: var(--ink); }
 </style>
+
+<script>
+  import { prefersReducedMotion } from '../lib/motion';
+
+  const root = document.querySelector<HTMLElement>('[data-reviews]')!;
+  const quotes = [...root.querySelectorAll<HTMLElement>('[data-quote]')];
+  const dots = [...root.querySelectorAll<HTMLElement>('.dots i')];
+  const nav = root.querySelector<HTMLElement>('[data-qnav]')!;
+  let current = 0;
+  let timer = 0;
+
+  function reveal(next: number) {
+    quotes.forEach((q, j) => {
+      q.hidden = j !== next;
+      if (j !== next) q.classList.remove('is-out');
+    });
+  }
+
+  function show(i: number) {
+    current = (i + quotes.length) % quotes.length;
+    const next = current;
+    dots.forEach((d, j) => d.classList.toggle('is-on', j === next));
+    clearTimeout(timer);
+
+    if (prefersReducedMotion()) {
+      reveal(next);
+      return;
+    }
+    // Fundido de salida de la que está visible, y entrada con subida de 10 px
+    quotes.forEach((q) => !q.hidden && q.classList.add('is-out'));
+    timer = window.setTimeout(() => {
+      const q = quotes[next];
+      q.classList.add('is-out');
+      reveal(next);
+      requestAnimationFrame(() => requestAnimationFrame(() => q.classList.remove('is-out')));
+    }, 250);
+  }
+
+  if (quotes.length > 1) {
+    nav.hidden = false;
+    root.querySelector('[data-qprev]')!.addEventListener('click', () => show(current - 1));
+    root.querySelector('[data-qnext]')!.addEventListener('click', () => show(current + 1));
+  }
+</script>

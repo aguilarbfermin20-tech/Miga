@@ -109,7 +109,7 @@ address { font-style: normal; }
 .s-lede { color: var(--muted); max-width: 420px; justify-self: end; }
 @media (max-width: 820px) { .s-head { grid-template-columns: 1fr; } .s-lede { justify-self: start; margin-top: 16px; } }
 
-/* ---------- colección ---------- */
+/* ---------- productos ---------- */
 /* grilla pareja: misma columna, misma foto, precio y botón alineados abajo */
 .piezas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 72px 32px; }
 .pieza { display: flex; flex-direction: column; }

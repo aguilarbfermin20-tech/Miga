@@ -23,7 +23,7 @@
   const hoy = DIAS.find(d => d[0] === diaHoy) || DIAS[1];
   const abierto = !!hoy[1] && minHoy >= toMin(hoy[1]) && minHoy < toMin(hoy[2]);
 
-  /* ---------- colección ---------- */
+  /* ---------- productos ---------- */
   const lista = $("#piezas");
   PIEZAS.forEach((p, i) => {
     const salio = !p.agotado && abierto && minHoy >= toMin(p.horario);

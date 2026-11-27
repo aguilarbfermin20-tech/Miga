@@ -5,6 +5,6 @@ HTML, CSS y JavaScript sin build. Abrí `index.html` con doble clic o subí la c
 - `index.html`: estructura y textos
 - `styles.css`: diseño (tokens arriba de todo, en `:root`)
 - `main.js`: datos (productos/zonas/turnos) e interacciones
-- `img/`: fotos de Unsplash, ya comprimidas
+- `img/`: fotos, ya comprimidas
 
 La versión anterior en Astro quedó en `../Miga-anterior/`. La comparación con Brasa está en `../REDISENO-esencia.md`.

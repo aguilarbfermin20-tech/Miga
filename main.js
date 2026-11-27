@@ -41,6 +41,10 @@
       </div>`;
     lista.appendChild(li);
   });
+  const cta = document.createElement("li");
+  cta.className = "pieza-cta";
+  cta.innerHTML = `<p class="label num">Tu caja</p><p>Combiná las piezas que quieras. Te la guardamos hasta las 20 h o la preparamos para mañana.</p><button type="button" class="btn btn-line" id="cta-caja">Ver mi caja</button>`;
+  lista.appendChild(cta);
 
   /* ---------- la caja ---------- */
   const caja = new Map();
@@ -142,6 +146,7 @@
   }
   btn.addEventListener("click", () => abrir(btn));
   pill.addEventListener("click", () => abrir(btn));
+  $("#cta-caja").addEventListener("click", e => abrir(e.currentTarget));
   $("#cerrar").addEventListener("click", cerrar);
   velo.addEventListener("click", cerrar);
   document.addEventListener("keydown", e => {

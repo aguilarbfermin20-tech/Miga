@@ -3,19 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Miga · Panadería de masa madre en Villa Crespo</title>
-<meta name="description" content="Panadería de masa madre en Villa Crespo. Treinta y seis horas de fermentación, harina de molino chico y horno de piso. Armá tu caja y encargala por WhatsApp.">
-<meta name="theme-color" content="#f3ede3">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%231c1612'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-style='italic' font-size='18' fill='%23f3ede3' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
+<title>Miga · Panadería de masa madre · Buenos Aires</title>
+<meta name="description" content="Panadería de masa madre en Villa Crespo. Treinta y seis horas de fermentación y horno de piedra. Armá tu caja y encargala por WhatsApp.">
+<meta name="theme-color" content="#121110">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23121110'/%3E%3Ctext x='16' y='21' font-family='Futura,Arial' font-weight='300' font-size='13' letter-spacing='1' fill='%23ede6da' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Albert+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200..500&display=swap" rel="stylesheet">
 <!--
-  MIGA · "La vitrina"
-  Metáfora: la página es la vitrina de una panadería de autor. Cada pieza tiene su número, su hora y su peso, como en una carta.
-  Interacción protagonista: la caja. Elegís piezas, la caja se va llenando lugar por lugar y sale por WhatsApp con el total.
-  Tipografía: Cormorant (display, itálica clara a tamaño enorme) · Albert Sans (texto) · DM Mono (datos y etiquetas).
-  Color: hueso + espresso + un solo acento caramelo, reservado a la acción.
+  MIGA · "Claroscuro"
+  Metáfora: el pan como objeto de lujo, iluminado en la oscuridad del obrador a las 5 de la mañana.
+  Tipografía: Jost (geométrica) fina, en mayúsculas espaciadas para títulos y liviana para el texto.
+  Color: casi negro, marfil y un solo acento latón, reservado a la acción.
+  Interacción protagonista: la caja, un panel que se llena pieza por pieza y sale por WhatsApp.
+  Fotos: serie oscura con luz lateral (Unsplash).
 -->
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -23,182 +24,128 @@
 <a class="skip" href="#contenido">Saltar al contenido</a>
 
 <header class="nav" id="nav">
-  <div class="wrap">
-    <a class="logo" href="#top" aria-label="Miga, inicio"><em>Miga</em><small>Panadería · Est. 2019</small></a>
+  <div class="nav-in">
     <nav aria-label="Secciones">
       <ul>
-        <li><a href="#vitrina">La vitrina</a></li>
-        <li><a href="#oficio">El oficio</a></li>
-        <li><a href="#visita">Visitanos</a></li>
+        <li><a href="#coleccion">Colección</a></li>
+        <li><a href="#oficio">Oficio</a></li>
+        <li><a href="#visita">Visita</a></li>
       </ul>
     </nav>
-    <button class="box-btn" type="button" id="box-btn">Tu caja <span class="box-count" id="box-count">0</span><span class="sr"> piezas</span></button>
+    <a class="wordmark" href="#top" aria-label="Miga, inicio">Miga</a>
+    <button class="caja-btn" type="button" id="caja-btn" aria-controls="caja" aria-expanded="false">Caja <span id="caja-n">0</span><span class="sr"> piezas</span></button>
   </div>
 </header>
 
 <main id="contenido">
 
-<!-- ============ HERO ============ -->
 <section class="hero" id="top" aria-labelledby="h1">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow rise">Thames 1240 · Villa Crespo · Buenos Aires</p>
-      <h1 id="h1" class="rise d1"><span>El pan</span><span class="i">sin prisa.</span></h1>
-      <p class="lede rise d2">Masa madre, harina de molino chico, agua, sal y treinta y seis horas. Horneamos en piso de piedra, todos los días, en tandas cortas.</p>
-      <div class="hero-actions rise d3">
-        <a class="btn btn-main" href="#vitrina">Armar mi caja</a>
-        <a class="link" href="#oficio">Conocé el oficio</a>
-      </div>
+  <img class="hero-img" src="img/hero.jpg" width="2000" height="1333" alt="Hogaza de masa madre con cortes y sésamo sobre una rejilla, en penumbra" fetchpriority="high">
+  <div class="hero-in">
+    <p class="label in d1">Boulangerie de masa madre · Buenos Aires</p>
+    <h1 id="h1" class="in d2">Miga</h1>
+    <p class="hero-sub in d3">Treinta y seis horas de fermentación.<br>Un horno de piedra. Ningún atajo.</p>
+    <div class="actions in d4">
+      <a class="btn" href="#coleccion">Ver la colección</a>
     </div>
-
-    <figure class="hero-photo rise d2">
-      <img src="img/hero.jpg" width="1600" height="1065" alt="Hogazas de masa madre recién horneadas con espigas de trigo" fetchpriority="high">
-      <figcaption class="float-card" aria-hidden="true">
-        <span class="mono">N° 01 · sale a las 7:00</span>
-        <b>Hogaza de campo</b>
-        <span class="row"><span>1 kg · 78 % hidratación</span><span class="mono">$ 6.800</span></span>
-      </figcaption>
-    </figure>
   </div>
-
-  <dl class="facts wrap rise d4">
-    <div><dt>Fermentación</dt><dd>36 h</dd></div>
-    <div><dt>Horno de piso</dt><dd>250 °C</dd></div>
-    <div><dt>Ingredientes</dt><dd>4</dd></div>
-    <div><dt>Tandas por día</dt><dd>6</dd></div>
-  </dl>
+  <p class="hero-foot label in d4" aria-hidden="true"><span>Thames 1240</span><span>Martes a domingo · desde las 7:00</span></p>
 </section>
 
-<!-- ============ MANIFIESTO ============ -->
-<section class="manifiesto" aria-label="Manifiesto">
-  <div class="wrap">
-    <p>No usamos levadura comercial, mejoradores ni prisa. <em>El sabor lo pone el tiempo</em> y la corteza, el horno.</p>
-  </div>
-</section>
-
-<!-- ============ VITRINA + CAJA ============ -->
-<section class="s vitrina" id="vitrina" aria-labelledby="vit-t">
-  <div class="wrap">
-    <header class="s-head">
-      <p class="eyebrow">La vitrina de hoy · <span id="hoy-fecha"></span></p>
-      <h2 class="s-title" id="vit-t">Seis piezas,<br><em>una caja.</em></h2>
-      <p class="s-lede">Elegí lo que quieras y la caja se arma sola. Te la guardamos hasta las 20 h o la preparamos para mañana.</p>
-    </header>
-
-    <div class="vitrina-grid">
-      <ol class="piezas" id="piezas"></ol>
-
-      <aside class="caja-col" id="caja-col" aria-label="Tu caja">
-        <button type="button" class="caja-toggle" id="caja-toggle" aria-expanded="false" aria-controls="caja">
-          <span>Tu caja · <span id="ct-n">0</span> piezas</span><span class="mono" id="ct-total">$ 0</span>
-        </button>
-        <div class="caja" id="caja" tabindex="-1">
-          <div class="caja-head">
-            <p class="caja-logo"><em>Miga</em></p>
-            <p class="mono">Caja N° <span id="caja-num"></span></p>
-          </div>
-          <div class="slots" id="slots" aria-hidden="true"></div>
-          <ul class="lineas" id="lineas" aria-live="polite"></ul>
-          <div class="total"><span class="mono">Total</span><b id="total">$ 0</b></div>
-          <fieldset class="retiro">
-            <legend class="mono">Retiro en Thames 1240</legend>
-            <div class="seg">
-              <label><input type="radio" name="retiro" value="hoy" checked><span>Hoy, hasta las 20</span></label>
-              <label><input type="radio" name="retiro" value="mañana"><span>Mañana</span></label>
-            </div>
-          </fieldset>
-          <label class="campo"><span class="mono">A nombre de (opcional)</span>
-            <input type="text" id="nombre" autocomplete="given-name" maxlength="40">
-          </label>
-          <a class="btn btn-main enviar" id="enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Encargar por WhatsApp</a>
-          <p class="nota" id="nota">Tu caja está vacía. Sumá una pieza de la vitrina.</p>
-        </div>
-      </aside>
+<section class="intro" aria-labelledby="intro-t">
+  <div class="wrap intro-grid">
+    <p class="label num" aria-hidden="true">01</p>
+    <div>
+      <h2 class="label" id="intro-t">La casa</h2>
+      <p class="intro-big">Harina de molino chico, agua, sal y masa madre. Nada más. El resto lo hacen el tiempo, el frío y el fuego.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ OFICIO ============ -->
-<section class="s oficio" id="oficio" aria-labelledby="of-t">
+<section class="s coleccion" id="coleccion" aria-labelledby="col-t">
   <div class="wrap">
     <header class="s-head">
-      <p class="eyebrow">El oficio</p>
-      <h2 class="s-title" id="of-t">Treinta y seis horas<br><em>para un pan.</em></h2>
+      <p class="label num" aria-hidden="true">02</p>
+      <h2 class="title" id="col-t">Colección</h2>
+      <p class="s-lede">Cinco piezas, horneadas en tandas cortas. Sumalas a tu caja y te la guardamos hasta las 20 h, o la preparamos para mañana.</p>
     </header>
-    <ol class="tiempos">
-      <li class="tiempo">
-        <figure><img src="img/panes-surtidos.jpg" width="1000" height="1250" loading="lazy" alt="Panes de masa madre de distintas formas sobre la mesada"></figure>
-        <p class="mono">Día 1 · 10:00</p>
-        <h3>La masa madre despierta</h3>
-        <p>La alimentamos con harina y agua. Cuando duplica su tamaño, amasamos con harina de un molino chico de Tandil.</p>
-      </li>
-      <li class="tiempo">
-        <figure><img src="img/centeno.jpg" width="800" height="1067" loading="lazy" alt="Pan de centeno cortado en rodajas"></figure>
-        <p class="mono">Día 1 · 14:00</p>
-        <h3>Pliegues y formado a mano</h3>
-        <p>Cada media hora estiramos y plegamos. Después formamos una por una, sin máquinas.</p>
-      </li>
-      <li class="tiempo">
-        <figure><img src="img/hogaza.jpg" width="900" height="1125" loading="lazy" alt="Hogaza con corteza dorada y cortes"></figure>
-        <p class="mono">Día 1 · 18:00</p>
-        <h3>Una noche en frío</h3>
-        <p>La fermentación lenta en cámara le da acidez suave, miga abierta y una semana de vida.</p>
-      </li>
-      <li class="tiempo">
-        <figure><img src="img/hero.jpg" width="1600" height="1065" loading="lazy" alt="Hogazas recién salidas del horno"></figure>
-        <p class="mono">Día 2 · 06:00</p>
-        <h3>Piedra a 250 °C</h3>
-        <p>Cuarenta minutos con vapor. A las 7 la primera hogaza está en la vitrina, todavía crujiendo.</p>
-      </li>
+    <ol class="piezas" id="piezas"></ol>
+  </div>
+</section>
+
+<section class="oficio" id="oficio" aria-labelledby="of-t">
+  <figure class="oficio-foto"><img src="img/integral.jpg" width="1100" height="1648" loading="lazy" alt="Manos abriendo una hogaza integral y mostrando la miga"></figure>
+  <div class="oficio-txt">
+    <p class="label num" aria-hidden="true">03</p>
+    <h2 class="title" id="of-t">Oficio</h2>
+    <ol class="pasos">
+      <li><span class="paso-n">10:00</span><div><h3>Masa madre</h3><p>La alimentamos con harina y agua hasta que duplica. Recién ahí amasamos.</p></div></li>
+      <li><span class="paso-n">14:00</span><div><h3>A mano</h3><p>Pliegues cada media hora y formado pieza por pieza, sin máquinas.</p></div></li>
+      <li><span class="paso-n">18:00</span><div><h3>Frío</h3><p>Una noche en cámara: acidez suave, miga abierta, una semana de vida.</p></div></li>
+      <li><span class="paso-n">06:00</span><div><h3>Piedra</h3><p>Cuarenta minutos a 250 °C con vapor. A las 7 está en el mostrador.</p></div></li>
     </ol>
   </div>
 </section>
 
-<!-- ============ VOCES ============ -->
-<section class="s voces" aria-labelledby="vo-t">
-  <div class="wrap">
-    <h2 class="sr" id="vo-t">Lo que dicen nuestros clientes</h2>
-    <figure class="voz" id="voz">
-      <blockquote><p id="voz-txt"></p></blockquote>
-      <figcaption class="mono" id="voz-who"></figcaption>
-    </figure>
-    <div class="voz-nav" role="group" aria-label="Elegir reseña" id="voz-nav"></div>
-  </div>
+<section class="banda" aria-label="Detalle de la miga">
+  <img src="img/rodajas.jpg" width="1200" height="1812" loading="lazy" alt="Rodajas de pan de semillas sobre tela negra">
+  <blockquote class="banda-q"><p id="voz-txt">“La hogaza me dura toda la semana. Ya no compro pan en otro lado.”</p><footer class="label" id="voz-who">Martina · Villa Crespo</footer></blockquote>
 </section>
 
-<!-- ============ VISITA ============ -->
 <section class="s visita" id="visita" aria-labelledby="vis-t">
   <div class="wrap visita-grid">
-    <figure class="visita-foto"><img src="img/local.jpg" width="1200" height="893" loading="lazy" alt="El mostrador de Miga con panes en los estantes"></figure>
-    <div class="visita-info">
-      <p class="estado" id="estado" aria-live="polite"><span class="dot"></span><span id="estado-txt">Mirando el reloj…</span></p>
-      <h2 id="vis-t" class="s-title">Thames 1240,<br><em>Villa Crespo.</em></h2>
-      <table class="horarios"><caption class="sr">Horarios de la semana</caption><tbody id="horarios"></tbody></table>
-      <p class="wa">Encargos por WhatsApp al <b>11 0000-0000</b>. Para cajas de más de 12 piezas, avisanos con un día.</p>
-      <div class="hero-actions">
-        <button class="btn btn-main" type="button" id="ver-caja">Ver mi caja</button>
-        <a class="link" href="https://www.google.com/maps/search/?api=1&query=Thames+1240+CABA" target="_blank" rel="noopener">Cómo llegar ↗</a>
+    <div>
+      <p class="label num" aria-hidden="true">04</p>
+      <h2 class="title" id="vis-t">Visita</h2>
+      <p class="estado label" id="estado" aria-live="polite"><span class="dot"></span><span id="estado-txt">—</span></p>
+      <address>Thames 1240<br>Villa Crespo, Buenos Aires</address>
+      <div class="actions">
+        <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=Thames+1240+CABA" target="_blank" rel="noopener">Cómo llegar</a>
       </div>
+    </div>
+    <div>
+      <table class="horarios"><caption class="sr">Horarios de la semana</caption><tbody id="horarios"></tbody></table>
+      <p class="wa">Encargos por WhatsApp al 11 0000-0000. Cajas de más de doce piezas, con un día de aviso.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ CIERRE ============ -->
 <section class="cierre" aria-label="Cierre">
-  <div class="wrap">
-    <p class="cierre-big">La primera hogaza sale<br>a las <em>7:00.</em></p>
-    <a class="btn btn-main" href="#vitrina">Armar mi caja</a>
-  </div>
+  <p class="label">La primera hogaza sale a las 7:00</p>
+  <a class="btn" href="#coleccion">Armar mi caja</a>
 </section>
 </main>
 
 <footer class="pie">
-  <div class="wrap">
-    <p class="logo"><em>Miga</em></p>
-    <p>Thames 1240, CABA · Martes a domingo</p>
-    <p>Proyecto de portfolio. Marca y datos ficticios. Fotos: Unsplash.</p>
+  <div class="wrap pie-in">
+    <p class="wordmark">Miga</p>
+    <p>Proyecto de portfolio. Marca y datos ficticios.<br>Fotos en Unsplash: Gabriella Clare Marino, Anton, Helen Van, Ilham Putra, Mae Mu y Diego Arenas de Rodrigo.</p>
   </div>
 </footer>
+
+<!-- la caja: panel lateral -->
+<div class="velo" id="velo" hidden></div>
+<aside class="caja" id="caja" role="dialog" aria-modal="true" aria-labelledby="caja-t" tabindex="-1" hidden>
+  <div class="caja-head">
+    <h2 class="label" id="caja-t">Tu caja · <span id="caja-num"></span></h2>
+    <button type="button" class="cerrar" id="cerrar" aria-label="Cerrar la caja">Cerrar</button>
+  </div>
+  <div class="slots" id="slots" aria-hidden="true"></div>
+  <ul class="lineas" id="lineas" aria-live="polite"></ul>
+  <div class="total"><span class="label">Total</span><b id="total">$ 0</b></div>
+  <fieldset class="retiro">
+    <legend class="label">Retiro en Thames 1240</legend>
+    <div class="seg">
+      <label><input type="radio" name="retiro" value="hoy" checked><span>Hoy, hasta las 20</span></label>
+      <label><input type="radio" name="retiro" value="mañana"><span>Mañana</span></label>
+    </div>
+  </fieldset>
+  <label class="campo"><span class="label">A nombre de (opcional)</span><input type="text" id="nombre" autocomplete="given-name" maxlength="40"></label>
+  <a class="btn enviar" id="enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Encargar por WhatsApp</a>
+  <p class="nota" id="nota">Tu caja está vacía.</p>
+</aside>
+
+<button type="button" class="pill" id="pill" hidden><span>Caja · <span id="pill-n">0</span></span><span id="pill-total">$ 0</span></button>
 
 <script src="main.js" defer></script>
 </body>
